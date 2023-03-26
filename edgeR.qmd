@@ -1,0 +1,70 @@
+---
+title: Descriptive statistics of read counts
+---
+
+```{r libraries}
+#| results: hide
+.packages <- c("knitr", "tidyverse", "kableExtra")
+.installed <- .packages %in% installed.packages()
+if (length(.packages[!.installed])>0) install.packages(.packages[!.installed])
+lapply(.packages, library, character.only=T)
+# edgeR installation
+if (!require("edgeR", quietly = TRUE))
+    install.packages("edgeR")
+BiocManager::install(c("edgeR"))
+library(edgeR)
+```
+
+```{r base-colors}
+color1 <- "#00BFC4"
+color2 <- "#F8766D"
+color3 <- "#7CAE00"
+color4 <- "#C77CFF"
+```
+
+```{r data-loading}
+# reads counts summary
+source("preprocesing.R")
+```
+
+```{r reads-loading}
+# reads loading
+reads <- DGEList(counts = matrix_reads, group = df_groups$Group)
+```
+
+```{r normalization}
+# TMM Normalization
+# Single-cell RNA-seq requires a specialized normalization method
+reads <- calcNormFactors(reads)
+#reads$samples
+```
+
+## Hierarchical clustering
+
+<!-- plot(hclust(dist(t(reads$counts)))) -->
+
+## Multidimensional scaling
+
+```{r multidimensional-scaling}
+plotMDS(reads)
+```
+
+## Means difference plots
+
+```{r means-differences-plot}
+for (i in 1:21) {
+    plotMD(reads, column = i)
+    abline(h=0, col="red", lty = 2, lwd = 2) 
+}
+```
+
+## Quasi-likelihood F-test
+
+```{r}
+design <- model.matrix(~df_groups$Group)
+reads <- estimateDisp(reads, design)
+fit <- glmQLFit(reads, design)
+qlf <- glmQLFTest(fit, coef=2)
+topTags(qlf)
+```
+

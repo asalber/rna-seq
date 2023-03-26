@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Rna-Seq Analysis",
+    "section": "",
+    "text": "Alfredo Sánchez Alberca (asalber@ceu.es)"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html#description",
+    "href": "index.html#description",
+    "title": "Rna-Seq Analysis",
+    "section": "Description",
+    "text": "Description\nRNA-Seq is an emerging technology in next generation sequencing (NGS) procedures for measuring gene expressions. RNA-Seq can be used for gene differential expression analysis of samples exposed to different experimental conditions.\nIn this study we use RNA-Seq for determining differences between gene expression for three experimental groups of pregnant females: diabetics diagnosed during 1st trimester, diabetics diagnosed during 2nd trimester and non-diabetics (control)."
+  },
+  {
+    "objectID": "index.html#objectives",
+    "href": "index.html#objectives",
+    "title": "Rna-Seq Analysis",
+    "section": "Objectives",
+    "text": "Objectives\n\nTest if there are statistical differences between the gene expressions of diabetic and non-diabetic pregnant females.\nTest if there are statistical differences between the gene expressions of diabetic pregnant females diagnosed during the first and the second trimester."
+  },
+  {
+    "objectID": "index.html#variables",
+    "href": "index.html#variables",
+    "title": "Rna-Seq Analysis",
+    "section": "Variables",
+    "text": "Variables\n\n\n\n\n\n\n\n\n\nName\nDescription\nType\nUnits (scale)\n\n\n\n\nId\nIndividual indentification key\nNominal\n\n\n\nGroup\nExperimental group\nNominal\nC (control), DG1 (diabetic 1st T), DG2 (diabetic 2nd T)\n\n\nGene\nGene expression\nNominal\nCluster-1 to Cluster-5446\n\n\nCount\nRNA-Seq count\nDiscrete\nCount"
+  },
+  {
+    "objectID": "index.html#sample-size",
+    "href": "index.html#sample-size",
+    "title": "Rna-Seq Analysis",
+    "section": "Sample size",
+    "text": "Sample size\nNumber of individuals (pregnant females) in the study: 21\n- Control: 7\n- Diabetics 1st trimester: 7\n- Diabetics 2nd trimester: 7"
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "Rna-Seq Analysis",
+    "section": "References",
+    "text": "References\n\n\nChamorro Poyo, Cristina. n.d. “Análisis de Datos de RNA-Seq Empleando Diferentes Paquetes Desarrollados Dentro Del Proyecto Bioconductor Para Estudios de Expresión Génica Diferencial.” Universidad Oberta de Catalunya. https://openaccess.uoc.edu/bitstream/10609/96466/6/cchamorropTFM0619memoria.pdf.\n\n\nChen, Yunshun, Davis McCarthy, Matthew Ritchie, Mark Robinson, and Gordon Smyth. n.d. “edgeR: Differential Analysis of Sequence Read Count Data User’s Guide.”\n\n\n“Differential Gene Expression - an Overview  ScienceDirect Topics.” n.d. Accessed March 5, 2023. https://www.sciencedirect.com/topics/biochemistry-genetics-and-molecular-biology/differential-gene-expression.\n\n\nRobinson, Mark, Davis Mccarthy, and Gordon Smyth. 2009. “Robinson MD, McCarthy DJ, Smyth GK.. EdgeR: A Bioconductor Package for Differential Expression Analysis of Digital Gene Expression Data. Bioinformatics 26: 139-140.” Bioinformatics (Oxford, England) 26 (November): 139–40. https://doi.org/10.1093/bioinformatics/btp616.\n\n\nSánchez Santana, Sara del Carmen. 2015. “Análisis de Datos de RNA-Seq Comparación de Métodos Para El Estudio de Expresión Génica Diferencial.” Universidad de Sevilla. https://idus.us.es/handle/11441/40809."
+  },
+  {
+    "objectID": "descriptive.html",
+    "href": "descriptive.html",
+    "title": "Descriptive statistics of read counts",
+    "section": "",
+    "text": "# reads counts summary\nsource(\"preprocesing.R\")\n\nBioconductor version 3.16 (BiocManager 1.30.20), R 4.2.2 (2022-10-31)\n\n\nInstallation paths not writeable, unable to update packages\n  path: /usr/lib/R/library\n  packages:\n    boot, class, codetools, foreign, MASS, Matrix, mgcv, nlme, spatial,\n    survival\n\n\nBioconductor version 3.16 (BiocManager 1.30.20), R 4.2.2 (2022-10-31)\n\n\nWarning: package(s) not installed when version(s) same as or greater than current; use\n  `force = TRUE` to re-install: 'edgeR'\n\n\nInstallation paths not writeable, unable to update packages\n  path: /usr/lib/R/library\n  packages:\n    boot, class, codetools, foreign, MASS, Matrix, mgcv, nlme, spatial,\n    survival\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.0     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.0\n✔ ggplot2   3.4.1     ✔ tibble    3.1.8\n✔ lubridate 1.9.2     ✔ tidyr     1.3.0\n✔ purrr     1.0.1     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors\nLoading required package: limma\n\nRows: 5447 Columns: 22\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (1): CLUSTER\ndbl (21): 30046-001, 30046-002, 30046-003, 30046-004, 30046-005, 30046-006, ...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\nRows: 21 Columns: 3\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (3): name, id, group\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
+  },
+  {
+    "objectID": "descriptive.html#reads-counts-summary",
+    "href": "descriptive.html#reads-counts-summary",
+    "title": "Descriptive statistics of read counts",
+    "section": "Reads counts summary",
+    "text": "Reads counts summary\n\ndf_reads %>% summarise(across(C1:`7DG2`, sum))\n\n# A tibble: 1 × 21\n       C1      C2     C3     C4     C5     C6     C7 `1DG1` `2DG1` `3DG1` `4DG1`\n    <dbl>   <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>\n1 6952736 9449926 8.31e6 7.79e6 8.73e6 9.61e6 7.80e6 9.27e6 7.80e6 7.59e6 1.00e7\n# … with 10 more variables: `5DG1` <dbl>, `6DG1` <dbl>, `7DG1` <dbl>,\n#   `1DG2` <dbl>, `2DG2` <dbl>, `3DG2` <dbl>, `4DG2` <dbl>, `5DG2` <dbl>,\n#   `6DG2` <dbl>, `7DG2` <dbl>"
+  }
+]

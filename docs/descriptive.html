@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.475">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>RNA-Seq - Descriptive statistics of read counts</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./img/logos/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">RNA-Seq</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./descriptive.html" aria-current="page">
+ <span class="menu-text">Descriptive statistics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./DESeq2.html">
+ <span class="menu-text">DESeq2</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./edgeR.html">
+ <span class="menu-text">EdgeR</span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#reads-counts-summary" id="toc-reads-counts-summary" class="nav-link active" data-scroll-target="#reads-counts-summary">Reads counts summary</a></li>
+  <li><a href="#reads-distributions-per-individual" id="toc-reads-distributions-per-individual" class="nav-link" data-scroll-target="#reads-distributions-per-individual">Reads distributions per individual</a></li>
+  <li><a href="#hierarchical-clustering" id="toc-hierarchical-clustering" class="nav-link" data-scroll-target="#hierarchical-clustering">Hierarchical clustering</a></li>
+  <li><a href="#multidimensional-scaling" id="toc-multidimensional-scaling" class="nav-link" data-scroll-target="#multidimensional-scaling">Multidimensional scaling</a></li>
+  <li><a href="#means-difference-plots" id="toc-means-difference-plots" class="nav-link" data-scroll-target="#means-difference-plots">Means difference plots</a></li>
+  <li><a href="#quasi-likelihood-f-test" id="toc-quasi-likelihood-f-test" class="nav-link" data-scroll-target="#quasi-likelihood-f-test">Quasi-likelihood F-test</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Descriptive statistics of read counts</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-hash="descriptive_cache/html/libraries_12a99656beb49116976b50e633636545">
+
+</div>
+<div class="cell" data-hash="descriptive_cache/html/colors_710a31698f3f475dc86e49442a9b674d">
+
+</div>
+<div class="cell" data-hash="descriptive_cache/html/data-loading_9ce993e641e554adff86d4e3e220c1fc">
+
+</div>
+<section id="reads-counts-summary" class="level2">
+<h2 class="anchored" data-anchor-id="reads-counts-summary">Reads counts summary</h2>
+<div class="cell" data-hash="descriptive_cache/html/reads-summary_1c2859b12d6cb2fb12f4b68f7d20d64f">
+<div class="cell-output-display">
+
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Total number of reads per individual.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Group </th>
+   <th style="text-align:left;"> Id </th>
+   <th style="text-align:right;"> Total counts </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:left;"> C1 </td>
+   <td style="text-align:right;"> 6952736 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:left;"> C2 </td>
+   <td style="text-align:right;"> 9449926 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:left;"> C3 </td>
+   <td style="text-align:right;"> 8314048 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:left;"> C4 </td>
+   <td style="text-align:right;"> 7786263 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:left;"> C5 </td>
+   <td style="text-align:right;"> 8728897 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:left;"> C6 </td>
+   <td style="text-align:right;"> 9612074 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:left;"> C7 </td>
+   <td style="text-align:right;"> 7796738 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG1 </td>
+   <td style="text-align:left;"> DG1T1 </td>
+   <td style="text-align:right;"> 9269936 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG1 </td>
+   <td style="text-align:left;"> DG1T2 </td>
+   <td style="text-align:right;"> 7802084 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG1 </td>
+   <td style="text-align:left;"> DG1T3 </td>
+   <td style="text-align:right;"> 7594457 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG1 </td>
+   <td style="text-align:left;"> DG1T4 </td>
+   <td style="text-align:right;"> 10014545 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG1 </td>
+   <td style="text-align:left;"> DG1T5 </td>
+   <td style="text-align:right;"> 10061782 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG1 </td>
+   <td style="text-align:left;"> DG1T6 </td>
+   <td style="text-align:right;"> 5362410 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG1 </td>
+   <td style="text-align:left;"> DG1T7 </td>
+   <td style="text-align:right;"> 8820109 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG2 </td>
+   <td style="text-align:left;"> DG2T1 </td>
+   <td style="text-align:right;"> 8752697 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG2 </td>
+   <td style="text-align:left;"> DG2T2 </td>
+   <td style="text-align:right;"> 10580231 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG2 </td>
+   <td style="text-align:left;"> DG2T3 </td>
+   <td style="text-align:right;"> 8168934 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG2 </td>
+   <td style="text-align:left;"> DG2T4 </td>
+   <td style="text-align:right;"> 7273059 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG2 </td>
+   <td style="text-align:left;"> DG2T5 </td>
+   <td style="text-align:right;"> 6697397 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG2 </td>
+   <td style="text-align:left;"> DG2T6 </td>
+   <td style="text-align:right;"> 11014448 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DG2 </td>
+   <td style="text-align:left;"> DG2T7 </td>
+   <td style="text-align:right;"> 7875376 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell" data-hash="descriptive_cache/html/total-reads-distribution_7f6fd05796b8cd6bc78bbc10d8fac39e">
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/total-reads-distribution-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="reads-distributions-per-individual" class="level2">
+<h2 class="anchored" data-anchor-id="reads-distributions-per-individual">Reads distributions per individual</h2>
+<!-- ```{r reads-distribution}
+reads_cpm_longer %>%
+    mutate(log2CPM = log2(CPM)) %>%
+    ggplot(aes(y = log2CPM, x = Id, fill = Group)) +
+    geom_boxplot()
+``` -->
+<!-- cpm(reads) -->
+</section>
+<section id="hierarchical-clustering" class="level2">
+<h2 class="anchored" data-anchor-id="hierarchical-clustering">Hierarchical clustering</h2>
+<!-- plot(hclust(dist(t(reads$counts)))) -->
+</section>
+<section id="multidimensional-scaling" class="level2">
+<h2 class="anchored" data-anchor-id="multidimensional-scaling">Multidimensional scaling</h2>
+<div class="cell" data-hash="descriptive_cache/html/multidimensional-scaling_5b2097487284a75df9284b4f28451c06">
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/multidimensional-scaling-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="means-difference-plots" class="level2">
+<h2 class="anchored" data-anchor-id="means-difference-plots">Means difference plots</h2>
+<div class="cell" data-hash="descriptive_cache/html/means-differences-plot_0f1d49c688f4a4b89f040be39f8723ca">
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-5.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-6.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-7.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-8.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-9.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-10.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-11.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-12.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-13.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-14.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-15.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-16.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-17.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-18.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-19.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-20.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/means-differences-plot-21.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="quasi-likelihood-f-test" class="level2">
+<h2 class="anchored" data-anchor-id="quasi-likelihood-f-test">Quasi-likelihood F-test</h2>
+<div class="cell" data-hash="descriptive_cache/html/unnamed-chunk-1_39ef01d038ab8bf319249985c1353344">
+<pre><code>## Coefficient:  df_groups$GroupDG1 
+##                    logFC    logCPM        F       PValue       FDR
+## Cluster-5165.0 -4.114276 4.0233936 19.50550 0.0002073674 0.1819046
+## Cluster-3339.0 -4.146306 5.1269033 19.16437 0.0002282366 0.1819046
+## Cluster-1863.0 -3.809226 4.1125069 17.07320 0.0004188628 0.2225558
+## Cluster-3916.0 -3.248260 2.9984883 12.46676 0.0018277530 0.4396343
+## Cluster-2027.0 -1.268149 4.4156135 11.82274 0.0022854994 0.4396343
+## Cluster-930.0  -4.490774 0.2367101 11.79402 0.0023086544 0.4396343
+## Cluster-3207.0 -3.247828 4.1449533 11.64656 0.0024316651 0.4396343
+## Cluster-4009.0 -2.732013 2.8709890 11.10962 0.0029442589 0.4396343
+## Cluster-4652.0 -1.789214 5.2329537 10.78331 0.0033130672 0.4396343
+## Cluster-3299.0 -2.220885 6.9102658 10.72899 0.0033792555 0.4396343</code></pre>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

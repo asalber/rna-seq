@@ -1,0 +1,44 @@
+---
+title: "Introduction"
+nocite: |
+    @*
+---
+
+<!-- ## Authors
+
+- Eva de la Fuente Luelmo (eva.defuenteluelmo@ceu.es)
+- Alfredo Sánchez Alberca (asalber@ceu.es) -->
+
+## Description
+
+RNA-Seq is an emerging technology in next generation sequencing (NGS) procedures for measuring gene expressions. RNA-Seq can be used for gene differential expression analysis of samples exposed to different experimental conditions. 
+
+In this study we use RNA-Seq for determining differences between gene expression for three experimental groups of pregnant females: diabetics diagnosed during 1st trimester, diabetics diagnosed during 2nd trimester and non-diabetics (control).
+
+## Objectives
+
+1. Test if there are statistical differences between the gene expressions of diabetic and non-diabetic pregnant females. 
+
+2. Test if there are statistical differences between the gene expressions of diabetic pregnant females diagnosed during the first and the second trimester.
+
+## Variables
+
+| Name | Description | Type | Units (scale) |
+|:-|:-|:-|:-|
+| Id | Individual indentification key | Nominal | |
+| Group | Experimental group | Nominal | C (control), DG1 (diabetic 1st T), DG2 (diabetic 2nd T) |
+| Gene | Gene expression | Nominal | Cluster-1 to Cluster-5446 |
+| Count | RNA-Seq count | Discrete | Count | 
+
+## Sample size
+
+Number of individuals (pregnant females) in the study: 21
+
+- Controls (C) : 7
+- Diabetics 1st trimester (DG1): 7
+- Diabetics 2nd trimester (DG2): 7
+
+## References
+
+::: {#refs}
+:::

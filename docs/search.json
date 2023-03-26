@@ -1,0 +1,121 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "RNA-Seq is an emerging technology in next generation sequencing (NGS) procedures for measuring gene expressions. RNA-Seq can be used for gene differential expression analysis of samples exposed to different experimental conditions.\nIn this study we use RNA-Seq for determining differences between gene expression for three experimental groups of pregnant females: diabetics diagnosed during 1st trimester, diabetics diagnosed during 2nd trimester and non-diabetics (control)."
+  },
+  {
+    "objectID": "index.html#objectives",
+    "href": "index.html#objectives",
+    "title": "Introduction",
+    "section": "Objectives",
+    "text": "Objectives\n\nTest if there are statistical differences between the gene expressions of diabetic and non-diabetic pregnant females.\nTest if there are statistical differences between the gene expressions of diabetic pregnant females diagnosed during the first and the second trimester."
+  },
+  {
+    "objectID": "index.html#variables",
+    "href": "index.html#variables",
+    "title": "Introduction",
+    "section": "Variables",
+    "text": "Variables\n\n\n\n\n\n\n\n\n\nName\nDescription\nType\nUnits (scale)\n\n\n\n\nId\nIndividual indentification key\nNominal\n\n\n\nGroup\nExperimental group\nNominal\nC (control), DG1 (diabetic 1st T), DG2 (diabetic 2nd T)\n\n\nGene\nGene expression\nNominal\nCluster-1 to Cluster-5446\n\n\nCount\nRNA-Seq count\nDiscrete\nCount"
+  },
+  {
+    "objectID": "index.html#sample-size",
+    "href": "index.html#sample-size",
+    "title": "Introduction",
+    "section": "Sample size",
+    "text": "Sample size\nNumber of individuals (pregnant females) in the study: 21\n\nControls (C) : 7\nDiabetics 1st trimester (DG1): 7\nDiabetics 2nd trimester (DG2): 7"
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "Introduction",
+    "section": "References",
+    "text": "References\n\n\nChamorro Poyo, Cristina. n.d. “Análisis de Datos de RNA-Seq Empleando Diferentes Paquetes Desarrollados Dentro Del Proyecto Bioconductor Para Estudios de Expresión Génica Diferencial.” Universidad Oberta de Catalunya. https://openaccess.uoc.edu/bitstream/10609/96466/6/cchamorropTFM0619memoria.pdf.\n\n\nChen, Yunshun, Davis McCarthy, Matthew Ritchie, Mark Robinson, and Gordon Smyth. n.d. “edgeR: Differential Analysis of Sequence Read Count Data User’s Guide.”\n\n\n“Differential Gene Expression - an Overview  ScienceDirect Topics.” n.d. Accessed March 5, 2023. https://www.sciencedirect.com/topics/biochemistry-genetics-and-molecular-biology/differential-gene-expression.\n\n\nRobinson, Mark, Davis Mccarthy, and Gordon Smyth. 2009. “Robinson MD, McCarthy DJ, Smyth GK.. EdgeR: A Bioconductor Package for Differential Expression Analysis of Digital Gene Expression Data. Bioinformatics 26: 139-140.” Bioinformatics (Oxford, England) 26 (November): 139–40. https://doi.org/10.1093/bioinformatics/btp616.\n\n\nSánchez Santana, Sara del Carmen. 2015. “Análisis de Datos de RNA-Seq Comparación de Métodos Para El Estudio de Expresión Génica Diferencial.” Universidad de Sevilla. https://idus.us.es/handle/11441/40809."
+  },
+  {
+    "objectID": "descriptive.html#reads-counts-summary",
+    "href": "descriptive.html#reads-counts-summary",
+    "title": "Descriptive statistics of read counts",
+    "section": "Reads counts summary",
+    "text": "Reads counts summary\n\n\n\n\nTotal number of reads per individual.\n \n  \n    Group \n    Id \n    Total counts \n  \n \n\n  \n    C \n    C1 \n    6952736 \n  \n  \n    C \n    C2 \n    9449926 \n  \n  \n    C \n    C3 \n    8314048 \n  \n  \n    C \n    C4 \n    7786263 \n  \n  \n    C \n    C5 \n    8728897 \n  \n  \n    C \n    C6 \n    9612074 \n  \n  \n    C \n    C7 \n    7796738 \n  \n  \n    DG1 \n    DG1T1 \n    9269936 \n  \n  \n    DG1 \n    DG1T2 \n    7802084 \n  \n  \n    DG1 \n    DG1T3 \n    7594457 \n  \n  \n    DG1 \n    DG1T4 \n    10014545 \n  \n  \n    DG1 \n    DG1T5 \n    10061782 \n  \n  \n    DG1 \n    DG1T6 \n    5362410 \n  \n  \n    DG1 \n    DG1T7 \n    8820109 \n  \n  \n    DG2 \n    DG2T1 \n    8752697 \n  \n  \n    DG2 \n    DG2T2 \n    10580231 \n  \n  \n    DG2 \n    DG2T3 \n    8168934 \n  \n  \n    DG2 \n    DG2T4 \n    7273059 \n  \n  \n    DG2 \n    DG2T5 \n    6697397 \n  \n  \n    DG2 \n    DG2T6 \n    11014448 \n  \n  \n    DG2 \n    DG2T7 \n    7875376"
+  },
+  {
+    "objectID": "descriptive.html#reads-distributions-per-individual",
+    "href": "descriptive.html#reads-distributions-per-individual",
+    "title": "Descriptive statistics of read counts",
+    "section": "Reads distributions per individual",
+    "text": "Reads distributions per individual"
+  },
+  {
+    "objectID": "descriptive.html#hierarchical-clustering",
+    "href": "descriptive.html#hierarchical-clustering",
+    "title": "Descriptive statistics of read counts",
+    "section": "Hierarchical clustering",
+    "text": "Hierarchical clustering"
+  },
+  {
+    "objectID": "descriptive.html#multidimensional-scaling",
+    "href": "descriptive.html#multidimensional-scaling",
+    "title": "Descriptive statistics of read counts",
+    "section": "Multidimensional scaling",
+    "text": "Multidimensional scaling"
+  },
+  {
+    "objectID": "descriptive.html#means-difference-plots",
+    "href": "descriptive.html#means-difference-plots",
+    "title": "Descriptive statistics of read counts",
+    "section": "Means difference plots",
+    "text": "Means difference plots"
+  },
+  {
+    "objectID": "descriptive.html#quasi-likelihood-f-test",
+    "href": "descriptive.html#quasi-likelihood-f-test",
+    "title": "Descriptive statistics of read counts",
+    "section": "Quasi-likelihood F-test",
+    "text": "Quasi-likelihood F-test\n\n## Coefficient:  df_groups$GroupDG1 \n##                    logFC    logCPM        F       PValue       FDR\n## Cluster-5165.0 -4.114276 4.0233936 19.50550 0.0002073674 0.1819046\n## Cluster-3339.0 -4.146306 5.1269033 19.16437 0.0002282366 0.1819046\n## Cluster-1863.0 -3.809226 4.1125069 17.07320 0.0004188628 0.2225558\n## Cluster-3916.0 -3.248260 2.9984883 12.46676 0.0018277530 0.4396343\n## Cluster-2027.0 -1.268149 4.4156135 11.82274 0.0022854994 0.4396343\n## Cluster-930.0  -4.490774 0.2367101 11.79402 0.0023086544 0.4396343\n## Cluster-3207.0 -3.247828 4.1449533 11.64656 0.0024316651 0.4396343\n## Cluster-4009.0 -2.732013 2.8709890 11.10962 0.0029442589 0.4396343\n## Cluster-4652.0 -1.789214 5.2329537 10.78331 0.0033130672 0.4396343\n## Cluster-3299.0 -2.220885 6.9102658 10.72899 0.0033792555 0.4396343"
+  },
+  {
+    "objectID": "edgeR.html#hierarchical-clustering",
+    "href": "edgeR.html#hierarchical-clustering",
+    "title": "Descriptive statistics of read counts",
+    "section": "Hierarchical clustering",
+    "text": "Hierarchical clustering"
+  },
+  {
+    "objectID": "edgeR.html#multidimensional-scaling",
+    "href": "edgeR.html#multidimensional-scaling",
+    "title": "Descriptive statistics of read counts",
+    "section": "Multidimensional scaling",
+    "text": "Multidimensional scaling"
+  },
+  {
+    "objectID": "edgeR.html#means-difference-plots",
+    "href": "edgeR.html#means-difference-plots",
+    "title": "Descriptive statistics of read counts",
+    "section": "Means difference plots",
+    "text": "Means difference plots"
+  },
+  {
+    "objectID": "edgeR.html#quasi-likelihood-f-test",
+    "href": "edgeR.html#quasi-likelihood-f-test",
+    "title": "Descriptive statistics of read counts",
+    "section": "Quasi-likelihood F-test",
+    "text": "Quasi-likelihood F-test\n\n## Coefficient:  df_groups$GroupDG1 \n##                    logFC     logCPM        F       PValue       FDR\n## Cluster-5165.0 -3.778488  3.7864821 20.94728 0.0001024006 0.3164248\n## Cluster-3339.0 -3.788594  4.8815869 20.51185 0.0001161831 0.3164248\n## Cluster-1863.0 -3.458183  3.8796697 17.86431 0.0002576997 0.4678967\n## Cluster-5340.0  6.190391  1.3653514 16.33397 0.0004185516 0.5055466\n## Cluster-666.0   4.862315 -0.3895843 15.30443 0.0005865341 0.5055466\n## Cluster-1638.0  3.401726 -0.5287143 14.43673 0.0007853104 0.5055466\n## Cluster-1121.0  3.210357 -0.5815962 12.98207 0.0013021853 0.5055466\n## Cluster-3207.0 -3.024132  3.9406369 12.87720 0.0013516714 0.5055466\n## Cluster-4787.0 -5.500143 -0.8905824 13.77956 0.0013742957 0.5055466\n## Cluster-1222.0 -5.340980 -0.9313044 13.66404 0.0014251625 0.5055466"
+  },
+  {
+    "objectID": "DESeq2.html#control-vs-dg1",
+    "href": "DESeq2.html#control-vs-dg1",
+    "title": "Read counts analysis with DESeq2",
+    "section": "Control vs DG1",
+    "text": "Control vs DG1\n\n\n\n\n## \n## out of 2180 with nonzero total read count\n## adjusted p-value < 0.1\n## LFC > 0 (up)       : 0, 0%\n## LFC < 0 (down)     : 5, 0.23%\n## outliers [1]       : 0, 0%\n## low counts [2]     : 0, 0%\n## (mean count < 6)\n## [1] see 'cooksCutoff' argument of ?results\n## [2] see 'independentFiltering' argument of ?results\n\n\nSignificant genes with the strongest up regulation\n\n## log2 fold change (MLE): Group DG1 vs C \n## Wald test p-value: Group DG1 vs C \n## DataFrame with 0 rows and 6 columns\n\n\n\nSignificant genes with the strongest down regulation\n\n## log2 fold change (MLE): Group DG1 vs C \n## Wald test p-value: Group DG1 vs C \n## DataFrame with 5 rows and 6 columns\n##                 baseMean log2FoldChange     lfcSE      stat      pvalue\n##                <numeric>      <numeric> <numeric> <numeric>   <numeric>\n## Cluster-3916.0   55.7413       -2.94200  0.780559  -3.76909 1.63841e-04\n## Cluster-3207.0  122.2578       -3.00892  0.772009  -3.89752 9.71815e-05\n## Cluster-1863.0  118.1395       -3.42860  0.745757  -4.59748 4.27641e-06\n## Cluster-5165.0  110.5364       -3.76423  0.742504  -5.06963 3.98583e-07\n## Cluster-3339.0  238.4827       -3.76597  0.743422  -5.06573 4.06845e-07\n##                       padj\n##                  <numeric>\n## Cluster-3916.0 0.071434596\n## Cluster-3207.0 0.052963919\n## Cluster-1863.0 0.003107523\n## Cluster-5165.0 0.000443461\n## Cluster-3339.0 0.000443461\n\n\n\nReport\n\n\n\n\n\n\n\nMA plots\n\n\n\nMA plots\n\n\n\n\n\n\nSamples clustering\n\n\n\n\n\n\n\n\n\n\nVolcano plot"
+  },
+  {
+    "objectID": "DESeq2.html#control-vs-dg2",
+    "href": "DESeq2.html#control-vs-dg2",
+    "title": "Read counts analysis with DESeq2",
+    "section": "Control vs DG2",
+    "text": "Control vs DG2\n\n\n\n\n## \n## out of 2180 with nonzero total read count\n## adjusted p-value < 0.1\n## LFC > 0 (up)       : 2, 0.092%\n## LFC < 0 (down)     : 11, 0.5%\n## outliers [1]       : 0, 0%\n## low counts [2]     : 212, 9.7%\n## (mean count < 11)\n## [1] see 'cooksCutoff' argument of ?results\n## [2] see 'independentFiltering' argument of ?results\n\n\nSignificant genes with the strongest up regulation\n\n## log2 fold change (MLE): Group DG2 vs C \n## Wald test p-value: Group DG2 vs C \n## DataFrame with 2 rows and 6 columns\n##                 baseMean log2FoldChange     lfcSE      stat      pvalue\n##                <numeric>      <numeric> <numeric> <numeric>   <numeric>\n## Cluster-4989.0   53.9402        2.11753  0.489201   4.32854 1.50104e-05\n## Cluster-1248.0   16.7584        2.42456  0.706770   3.43048 6.02512e-04\n##                      padj\n##                 <numeric>\n## Cluster-4989.0 0.00738512\n## Cluster-1248.0 0.09881204\n\n\n\nSignificant genes with the strongest down regulation\n\n## log2 fold change (MLE): Group DG2 vs C \n## Wald test p-value: Group DG2 vs C \n## DataFrame with 11 rows and 6 columns\n##                 baseMean log2FoldChange     lfcSE      stat      pvalue\n##                <numeric>      <numeric> <numeric> <numeric>   <numeric>\n## Cluster-4181.0 1739.6593       -1.46477  0.425791  -3.44011 5.81483e-04\n## Cluster-5090.0 1753.5071       -1.49264  0.430521  -3.46705 5.26204e-04\n## Cluster-3299.0  875.2495       -2.13597  0.574315  -3.71917 1.99882e-04\n## Cluster-3204.0  450.9683       -2.46695  0.615370  -4.00889 6.10052e-05\n## Cluster-4009.0   50.5302       -2.61182  0.702265  -3.71914 1.99900e-04\n## Cluster-2041.0   41.8972       -2.68140  0.700616  -3.82721 1.29604e-04\n## Cluster-5165.0  110.5364       -3.06732  0.737606  -4.15848 3.20374e-05\n## Cluster-1863.0  118.1395       -3.24688  0.744006  -4.36404 1.27680e-05\n## Cluster-3339.0  238.4827       -3.49332  0.742120  -4.70721 2.51129e-06\n## Cluster-3207.0  122.2578       -3.59574  0.773866  -4.64646 3.37685e-06\n## Cluster-1255.0  266.8146       -6.79768  1.995104  -3.40718 6.56381e-04\n##                      padj\n##                 <numeric>\n## Cluster-4181.0 0.09881204\n## Cluster-5090.0 0.09881204\n## Cluster-3299.0 0.04371153\n## Cluster-3204.0 0.02000971\n## Cluster-4009.0 0.04371153\n## Cluster-2041.0 0.03643732\n## Cluster-5165.0 0.01260993\n## Cluster-1863.0 0.00738512\n## Cluster-3339.0 0.00332282\n## Cluster-3207.0 0.00332282\n## Cluster-1255.0 0.09936599\n\n\n\nReport\n\n\n\n\n\n\n\nMA plots\n\n\n\nMA plots\n\n\n\n\n\n\nSamples clustering\n\n\n\n\n\n\n\n\n\n\nVolcano plot"
+  }
+]

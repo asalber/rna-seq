@@ -1,0 +1,64 @@
+
+@article{chen_edger_nodate,
+	title = {{edgeR}: differential analysis of sequence read count data  {User}'s {Guide}},
+	language = {en},
+	author = {Chen, Yunshun and McCarthy, Davis and Ritchie, Matthew and Robinson, Mark and Smyth, Gordon},
+	keywords = {rna-seq},
+	file = {Chen et al. - edgeR differential analysis of sequence read coun.pdf:/home/alf/Zotero/storage/RFH3HM7K/Chen et al. - edgeR differential analysis of sequence read coun.pdf:application/pdf},
+}
+
+@techreport{chamorro_poyo_alisis_nodate,
+	title = {Análisis de datos de {RNA}-{Seq} empleando diferentes paquetes desarrollados dentro del proyecto {Bioconductor} para estudios de expresión génica diferencial},
+	url = {https://openaccess.uoc.edu/bitstream/10609/96466/6/cchamorropTFM0619memoria.pdf},
+	language = {es},
+	institution = {Universidad Oberta de Catalunya},
+	author = {Chamorro Poyo, Cristina},
+	keywords = {rna-seq},
+	file = {Poyo - Análisis de datos de RNA-Seq empleando diferentes .pdf:/home/alf/Zotero/storage/SSLK4GUC/Poyo - Análisis de datos de RNA-Seq empleando diferentes .pdf:application/pdf},
+}
+
+@techreport{sanchez_santana_alisis_2015,
+	title = {Análisis de datos de {RNA}-{Seq} comparación de métodos para el estudio de expresión génica diferencial},
+	copyright = {Attribution-NonCommercial-NoDerivatives 4.0 Internacional},
+	url = {https://idus.us.es/handle/11441/40809},
+	abstract = {RNA-Seq is a next generation sequencing (NGS) procedure of the DNA for discovering, profiling and quantifying RNA transcripts, so this technology allows for measure gene expression. The analysis of RNA-Seq data, which comprise discrete counts of reads mapped to genes or transcripts, is made up of different parts: quality control checks on raw sequence data,mapping reads to a reference genome, counts of reads and the detection of differentially expressed genes across different biological conditions. The Bioconductor project provides tools for identifying differential expression for RNA-Seq data by means of the use of R statistical programming language. We focus our attention on four Bioconductor packages: EdgeR, NOISeq, DESeq2 and Limma. Now let’s see the main features of these packages. 
+ - EdgeR: This package is based on the negative binomial distribution. The default method for the normalization of data is the trimmed mean of M-values (TMM). For filter out transcripts with very low counts, EdgeR establishes a minimum of counts per millions (CPM). Finally, it uses the exact test for the binomial negative to determinate differentially expressed genes. - NOISeq: It is based on non-parametric approaches for the differential expression analysis of RNA-Seq data. In this case, the normalization default technique implemented is RPKM (reads per kilobase per million). The method to filter out transcripts with low counts is CPM (counts per millions). The differential expression analysis between two experimental conditions is based on the probability of each transcript or gene of being differently expressed: it is obtained by comparing the differential expression statistics, M-D values, of that transcript or gene against distribution of changes in expression values when comparing replicates within the same condition, noise distribution. 
+ - DESeq2: It is based on negative binomial generalized linear models. The technique used for the normalization is normalisation based on the estimation of the effective library size. DESEq2 filters out the transcripts which very low counts by means of the mean of normalized counts for 
+each gene. Finally, it uses the Wald test for determining differentially expressed genes. - Limma: This Bioconductor package was designed originally for the analysis of Microarray data, but it has been adapted for the analysis of RNA-Seq data. It is based on the use of linear models. The normalization default technique is the trimmed mean of M-values (TMM). To filter 3 out transcripts with very low counts, Limma uses the minimum of counts per millions (CPM). This package uses the t-test for determining differentially expressed genes. We analyze RNA-Seq data of eight patients with asthma. There are four untreated patients and four patients with dexamethasone, a potent glucocorticoid. We want to identify the number of 
+differentially expressed transcripts between these two experimental conditions: untreateddexamethasone. It can be done by using the four Bioconductor packages seen previously. The obtained results are: 853 differentially expressed transcripts with EdgeR, 415 transcripts with 
+NOISeq, 1212 transcripts with DESeq2, and 719 with Limma. These four packages agree on 277 differentially expressed transcripts between untreated patients and treated (dexamethasone) patients.},
+	language = {spa},
+	urldate = {2023-03-05},
+	institution = {Universidad de Sevilla},
+	author = {Sánchez Santana, Sara del Carmen},
+	month = jun,
+	year = {2015},
+	note = {Accepted: 2016-05-05T11:57:29Z},
+	keywords = {rna-seq},
+	file = {Sánchez Santana - 2015 - Análisis de datos de RNA-Seq comparación de método.pdf:/home/alf/Zotero/storage/CYEWRF9T/Sánchez Santana - 2015 - Análisis de datos de RNA-Seq comparación de método.pdf:application/pdf},
+}
+
+@misc{noauthor_differential_nodate,
+	title = {Differential {Gene} {Expression} - an overview {\textbar} {ScienceDirect} {Topics}},
+	url = {https://www.sciencedirect.com/topics/biochemistry-genetics-and-molecular-biology/differential-gene-expression},
+	urldate = {2023-03-05},
+	keywords = {rna-seq},
+	file = {Differential Gene Expression - an overview | ScienceDirect Topics:/home/alf/Zotero/storage/L7BHJDGY/differential-gene-expression.html:text/html},
+}
+
+@article{robinson_robinson_2009,
+	title = {Robinson {MD}, {McCarthy} {DJ}, {Smyth} {GK}.. {EdgeR}: a {Bioconductor} package for differential expression analysis of digital gene expression data. {Bioinformatics} 26: 139-140},
+	volume = {26},
+	shorttitle = {Robinson {MD}, {McCarthy} {DJ}, {Smyth} {GK}.. {EdgeR}},
+	doi = {10.1093/bioinformatics/btp616},
+	abstract = {It is expected that emerging digital gene expression (DGE) technologies will overtake microarray technologies in the near future for many functional genomics applications. One of the fundamental data analysis tasks, especially for gene expression studies, involves determining whether there is evidence that counts for a transcript or exon are significantly different across experimental conditions. edgeR is a Bioconductor software package for examining differential expression of replicated count data. An overdispersed Poisson model is used to account for both biological and technical variability. Empirical Bayes methods are used to moderate the degree of overdispersion across transcripts, improving the reliability of inference. The methodology can be used even with the most minimal levels of replication, provided at least one phenotype or experimental condition is replicated. The software may have other applications beyond sequencing data, such as proteome peptide count data.
+Availability: The package is freely available under the LGPL licence from the Bioconductor web site (http://bioconductor.org).
+Contact: mrobinson@wehi.edu.au},
+	journal = {Bioinformatics (Oxford, England)},
+	author = {Robinson, Mark and Mccarthy, Davis and Smyth, Gordon},
+	month = nov,
+	year = {2009},
+	keywords = {rna-seq},
+	pages = {139--40},
+	file = {Full Text PDF:/home/alf/Zotero/storage/VFHC8WNY/Robinson et al. - 2009 - Robinson MD, McCarthy DJ, Smyth GK.. EdgeR a Bioc.pdf:application/pdf},
+}

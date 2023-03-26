@@ -1,0 +1,197 @@
+---
+title: Read counts analysis with DESeq2
+---
+
+```{r libraries}
+#| results: hide
+.packages <- c("knitr", "tidyverse", "kableExtra")
+.installed <- .packages %in% installed.packages()
+if (length(.packages[!.installed])>0) install.packages(.packages[!.installed])
+lapply(.packages, library, character.only=T)
+# DESeq2 installation
+if (!require("DESeq2", quietly = TRUE))
+    BiocManager::install("DESeq2")
+library(DESeq2)
+# if (!require("ReportingTools", quietly = TRUE))
+#     BiocManager::install("ReportingTools")
+# library(ReportingTools)
+if (!require("regionReport", quietly = TRUE))
+    BiocManager::install("regionReport")
+library(regionReport)
+if (!require("Glimma", quietly = TRUE))
+    BiocManager::install("Glimma")
+library(Glimma)
+if (!require("pcaExplorer", quietly=TRUE))
+    BiocManager::install("pcaExplorer")
+library("pcaExplorer")
+```
+
+```{r base-colors}
+color1 <- "#00BFC4"
+color2 <- "#F8766D"
+color3 <- "#7CAE00"
+color4 <- "#C77CFF"
+```
+
+```{r data-loading}
+# reads counts summary
+source("preprocesing.R")
+```
+
+```{r create-DESeq2-data-object}
+dds <- DESeqDataSetFromMatrix(countData = reads, colData = df_groups, design = ~ Group)
+```
+
+## Control vs DG1
+
+```{r DESeq-modelling-count-control-dg1}
+dds <- DESeq(dds)
+```
+
+```{r results-control-dg1}
+res <- results(dds, contrast = c("Group", "DG1", "C") )
+summary(res)
+```
+
+### Significant genes with the strongest up regulation
+
+```{r genes-strongest-up-regulation-control-dg1}
+resSig <- subset(res, res$padj < 0.1 )
+resSigUp <- resSig[resSig$log2FoldChange > 0, ]
+resSigUp[order(resSigUp$log2FoldChange), ]
+```
+
+### Significant genes with the strongest down regulation
+
+```{r genes-strongest-down-regulation-control-dg1}
+resSigUp <- resSig[resSig$log2FoldChange < 0, ]
+resSigUp[order(-resSigUp$log2FoldChange), ]
+```
+
+### Report
+
+```{r glimma-report-control-dg1}
+glimmaMDS(dds, height=900)
+```
+
+#### MA plots
+
+```{r ma-plot-control-dg1}
+#library(edgeR)
+htmlwidgets::saveWidget(glimmaMA(dds, groups = colData(dds)$Group), "ma-plot.html")
+```
+
+[MA plots](./ma-plot-control-dg1.html)
+
+```{r pca-explorer-control-dg1}
+#pcaExplorer(dds = dds)
+```
+
+### Samples clustering
+
+```{r rlog-transfomation-control-dg1}
+# apply rlog transformation
+rld <- rlog(dds)
+#plot(assay(rld)[, 1:2], col="#00000020", pch=20, cex=0.3)
+```
+
+```{r sample-distances-control-dg1}
+sampleDists <- dist(t(assay(rld)))
+sampleDistMatrix <- as.matrix(sampleDists)
+#rownames(sampleDistMatrix) <- paste( rld$treatment, rld$patient, sep="-" )
+#colnames(sampleDistMatrix) <- NULL   
+library("gplots")
+library("RColorBrewer")
+colours = colorRampPalette(brewer.pal(9, "PuBu"))(255)
+heatmap.2(sampleDistMatrix, trace = "none", col = colours)
+```
+
+### Volcano plot
+
+```{r volcano-plot-control-dg1}
+#reset par
+par(mfrow=c(1,1))
+with(res, plot(log2FoldChange, -log10(pvalue), pch=20, main="Volcano plot", xlim=c(-3,3)))
+
+# Add colored points: blue if padj<0.01, red if log2FC>1 and padj<0.05)
+with(subset(res, padj<.1 ), points(log2FoldChange, -log10(pvalue), pch=20, col="blue"))
+with(subset(res, padj<.1 & abs(log2FoldChange)>2), points(log2FoldChange, -log10(pvalue), pch=20, col="red"))
+```
+
+
+## Control vs DG2
+
+```{r DESeq-modelling-count}
+dds <- DESeq(dds)
+```
+
+```{r results}
+res <- results(dds)
+summary(res)
+```
+
+### Significant genes with the strongest up regulation
+
+```{r genes-strongest-up-regulation}
+resSig <- subset(res, res$padj < 0.1 )
+resSigUp <- resSig[resSig$log2FoldChange > 0, ]
+resSigUp[order(resSigUp$log2FoldChange), ]
+```
+
+### Significant genes with the strongest down regulation
+
+```{r genes-strongest-down-regulation}
+resSigUp <- resSig[resSig$log2FoldChange < 0, ]
+resSigUp[order(-resSigUp$log2FoldChange), ]
+```
+
+### Report
+
+```{r glimma-report}
+glimmaMDS(dds, height=900)
+```
+
+#### MA plots
+
+```{r ma-plot}
+#library(edgeR)
+htmlwidgets::saveWidget(glimmaMA(dds, groups = colData(dds)$Group), "ma-plot.html")
+```
+
+[MA plots](./ma-plot.html)
+
+```{r pca-explorer}
+#pcaExplorer(dds = dds)
+```
+
+
+### Samples clustering
+
+```{r rlog-transfomation}
+# apply rlog transformation
+rld <- rlog(dds)
+#plot(assay(rld)[, 1:2], col="#00000020", pch=20, cex=0.3)
+```
+
+```{r sample-distances}
+sampleDists <- dist(t(assay(rld)))
+sampleDistMatrix <- as.matrix(sampleDists)
+#rownames(sampleDistMatrix) <- paste( rld$treatment, rld$patient, sep="-" )
+#colnames(sampleDistMatrix) <- NULL   
+library("gplots")
+library("RColorBrewer")
+colours = colorRampPalette(brewer.pal(9, "PuBu"))(255)
+heatmap.2(sampleDistMatrix, trace = "none", col = colours)
+```
+
+### Volcano plot
+
+```{r volcano-plot}
+#reset par
+par(mfrow=c(1,1))
+with(res, plot(log2FoldChange, -log10(pvalue), pch=20, main="Volcano plot", xlim=c(-3,3)))
+
+# Add colored points: blue if padj<0.01, red if log2FC>1 and padj<0.05)
+with(subset(res, padj<.1 ), points(log2FoldChange, -log10(pvalue), pch=20, col="blue"))
+with(subset(res, padj<.1 & abs(log2FoldChange)>2), points(log2FoldChange, -log10(pvalue), pch=20, col="red"))
+```

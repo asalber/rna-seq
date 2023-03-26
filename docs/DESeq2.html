@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.475">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>RNA-Seq - Read counts analysis with DESeq2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./img/logos/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="site_libs/vega-1/vega_plots.css" rel="stylesheet">
+<script src="site_libs/vega-1/vega.min.js"></script>
+<link href="site_libs/vega-tooltip-1/vega-tooltip.css" rel="stylesheet">
+<script src="site_libs/vega-tooltip-1/vega-tooltip.js"></script>
+<script src="site_libs/GlimmaV2-1/MDSSpecs.js"></script>
+<script src="site_libs/GlimmaV2-1/XYSpecs.js"></script>
+<script src="site_libs/GlimmaV2-1/expressionSpec.js"></script>
+<script src="site_libs/GlimmaV2-1/makeTooltip.js"></script>
+<script src="site_libs/GlimmaV2-1/saveTools.js"></script>
+<script src="site_libs/glimmaMDS-binding-2.8.0/glimmaMDS.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">RNA-Seq</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./descriptive.html">
+ <span class="menu-text">Descriptive statistics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./DESeq2.html" aria-current="page">
+ <span class="menu-text">DESeq2</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./edgeR.html">
+ <span class="menu-text">EdgeR</span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#control-vs-dg1" id="toc-control-vs-dg1" class="nav-link active" data-scroll-target="#control-vs-dg1">Control vs DG1</a>
+  <ul class="collapse">
+  <li><a href="#significant-genes-with-the-strongest-up-regulation" id="toc-significant-genes-with-the-strongest-up-regulation" class="nav-link" data-scroll-target="#significant-genes-with-the-strongest-up-regulation">Significant genes with the strongest up regulation</a></li>
+  <li><a href="#significant-genes-with-the-strongest-down-regulation" id="toc-significant-genes-with-the-strongest-down-regulation" class="nav-link" data-scroll-target="#significant-genes-with-the-strongest-down-regulation">Significant genes with the strongest down regulation</a></li>
+  <li><a href="#report" id="toc-report" class="nav-link" data-scroll-target="#report">Report</a></li>
+  <li><a href="#samples-clustering" id="toc-samples-clustering" class="nav-link" data-scroll-target="#samples-clustering">Samples clustering</a></li>
+  <li><a href="#volcano-plot" id="toc-volcano-plot" class="nav-link" data-scroll-target="#volcano-plot">Volcano plot</a></li>
+  </ul></li>
+  <li><a href="#control-vs-dg2" id="toc-control-vs-dg2" class="nav-link" data-scroll-target="#control-vs-dg2">Control vs DG2</a>
+  <ul class="collapse">
+  <li><a href="#significant-genes-with-the-strongest-up-regulation-1" id="toc-significant-genes-with-the-strongest-up-regulation-1" class="nav-link" data-scroll-target="#significant-genes-with-the-strongest-up-regulation-1">Significant genes with the strongest up regulation</a></li>
+  <li><a href="#significant-genes-with-the-strongest-down-regulation-1" id="toc-significant-genes-with-the-strongest-down-regulation-1" class="nav-link" data-scroll-target="#significant-genes-with-the-strongest-down-regulation-1">Significant genes with the strongest down regulation</a></li>
+  <li><a href="#report-1" id="toc-report-1" class="nav-link" data-scroll-target="#report-1">Report</a></li>
+  <li><a href="#samples-clustering-1" id="toc-samples-clustering-1" class="nav-link" data-scroll-target="#samples-clustering-1">Samples clustering</a></li>
+  <li><a href="#volcano-plot-1" id="toc-volcano-plot-1" class="nav-link" data-scroll-target="#volcano-plot-1">Volcano plot</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Read counts analysis with DESeq2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-hash="DESeq2_cache/html/libraries_1effa8e60b93d3d3462c8102049b79eb">
+
+</div>
+<div class="cell" data-hash="DESeq2_cache/html/base-colors_68a941074131d3782b0dd0a9bdb08c9b">
+
+</div>
+<div class="cell" data-hash="DESeq2_cache/html/data-loading_2869ac5b2ff2e13c0b77325663612201">
+
+</div>
+<div class="cell" data-hash="DESeq2_cache/html/create-DESeq2-data-object_4d04a1418e7f1b48af9eb74f45caeaa8">
+
+</div>
+<section id="control-vs-dg1" class="level2">
+<h2 class="anchored" data-anchor-id="control-vs-dg1">Control vs DG1</h2>
+<div class="cell" data-hash="DESeq2_cache/html/DESeq-modelling-count-control-dg1_88c42a012810ea22f27bca2e225166fa">
+
+</div>
+<div class="cell" data-hash="DESeq2_cache/html/results-control-dg1_0f32cb7195f1bc93c44d773bb6a2fbe3">
+<pre><code>## 
+## out of 2180 with nonzero total read count
+## adjusted p-value &lt; 0.1
+## LFC &gt; 0 (up)       : 0, 0%
+## LFC &lt; 0 (down)     : 5, 0.23%
+## outliers [1]       : 0, 0%
+## low counts [2]     : 0, 0%
+## (mean count &lt; 6)
+## [1] see 'cooksCutoff' argument of ?results
+## [2] see 'independentFiltering' argument of ?results</code></pre>
+</div>
+<section id="significant-genes-with-the-strongest-up-regulation" class="level3">
+<h3 class="anchored" data-anchor-id="significant-genes-with-the-strongest-up-regulation">Significant genes with the strongest up regulation</h3>
+<div class="cell" data-hash="DESeq2_cache/html/genes-strongest-up-regulation-control-dg1_fe4f673722b4ae6460cdb4a993f9f01e">
+<pre><code>## log2 fold change (MLE): Group DG1 vs C 
+## Wald test p-value: Group DG1 vs C 
+## DataFrame with 0 rows and 6 columns</code></pre>
+</div>
+</section>
+<section id="significant-genes-with-the-strongest-down-regulation" class="level3">
+<h3 class="anchored" data-anchor-id="significant-genes-with-the-strongest-down-regulation">Significant genes with the strongest down regulation</h3>
+<div class="cell" data-hash="DESeq2_cache/html/genes-strongest-down-regulation-control-dg1_0d6836d249265cf4229055e6a3c94a76">
+<pre><code>## log2 fold change (MLE): Group DG1 vs C 
+## Wald test p-value: Group DG1 vs C 
+## DataFrame with 5 rows and 6 columns
+##                 baseMean log2FoldChange     lfcSE      stat      pvalue
+##                &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt;
+## Cluster-3916.0   55.7413       -2.94200  0.780559  -3.76909 1.63841e-04
+## Cluster-3207.0  122.2578       -3.00892  0.772009  -3.89752 9.71815e-05
+## Cluster-1863.0  118.1395       -3.42860  0.745757  -4.59748 4.27641e-06
+## Cluster-5165.0  110.5364       -3.76423  0.742504  -5.06963 3.98583e-07
+## Cluster-3339.0  238.4827       -3.76597  0.743422  -5.06573 4.06845e-07
+##                       padj
+##                  &lt;numeric&gt;
+## Cluster-3916.0 0.071434596
+## Cluster-3207.0 0.052963919
+## Cluster-1863.0 0.003107523
+## Cluster-5165.0 0.000443461
+## Cluster-3339.0 0.000443461</code></pre>
+</div>
+</section>
+<section id="report" class="level3">
+<h3 class="anchored" data-anchor-id="report">Report</h3>
+<div class="cell" data-hash="DESeq2_cache/html/glimma-report-control-dg1_eebeb5d317155680ebf3cefa87f37ceb">
+<div class="cell-output-display">
+<div id="htmlwidget-3db365040a4aefc6ac02" style="width:100%;height:650px;" class="glimmaMDS html-widget "></div>
+<script type="application/json" data-for="htmlwidget-3db365040a4aefc6ac02">{"x":{"data":{"mdsData":{"dim1":[-0.910506014273919,-0.974748864665895,-0.579612492521015,-0.501325786855989,1.50437272924944,0.356742107769857,1.71881473985559,-0.671771339063998,0.578188876156406,0.296077840471057,0.000467792083129729,-0.607062745743249,0.474393823676136,-0.402739856666745,-1.37033482320706,-0.226959843768956,0.594805271242107,-1.10760047693535,0.0364439305524559,0.0970559186488084,1.6952992139972],"dim2":[-0.418888068724432,0.0195407657746908,0.00437025487183033,-0.432791058126543,1.48974258041405,1.24107531273986,-0.668782264015055,-0.224146927487065,-0.932422302086695,0.537357686274596,0.850847903541733,-0.670658764733249,0.267952998011088,0.5173309569988,-0.465741504678273,0.769692506674623,-0.907721541787572,0.0493881025508039,-0.244720467707722,0.465039009475315,-1.2464651779808],"dim3":[-0.0820220258416822,0.0411766966341502,0.283639662397822,0.899500388928062,-0.132843130001681,0.505210595749961,0.0716017939109767,0.0188021084352092,-0.173884452800425,0.213954071010933,-0.557343230828021,-0.861327008390234,0.160534785125517,-0.132698966025309,-0.0623925455394266,0.281273158883494,-0.784139132249579,0.567648480924332,0.261664179069454,-1.13728370040645,0.618928271012896],"dim4":[0.863945296267374,-0.387047890638022,0.01811413999434,0.335661693097376,0.310837042897614,0.178992297105757,0.279640040894944,-0.276146267193987,-0.525929508231673,0.217652124317976,-0.563164729762055,-0.539172915096331,-0.390274722781635,0.0227168971922271,0.0756327124694912,-0.038477820126337,1.18384706270588,0.159130259539461,-0.276414336670613,-0.109893035756478,-0.539648340225302],"dim5":[0.0222393691598395,-0.0884157059163785,0.294503546571736,0.677234008546337,-0.116913399659097,-0.505778050290842,-0.43394710673689,-0.151933836721707,0.759702320951261,-0.176405667197027,0.131741959568199,-0.683636150795339,0.579196082320307,-0.035120908324148,-0.33814257021813,0.387322736559338,0.202903861852225,-0.484852880337861,0.0991754862690669,0.280282042446519,-0.419155138047409],"dim6":[0.527690989142142,0.22765519880262,-0.109976278035444,-0.816285697823276,-0.345759070392706,-0.143292868896789,-0.343824748548945,0.507571496552335,-0.194829302907624,0.317458738212249,0.0220932112487775,-0.695060264555855,0.546166274978344,0.0877509946271672,-0.183576540614116,-0.0231931636463663,0.144864577810896,0.103627791729536,-0.256648169642133,0.110880872826347,0.516685959132841],"dim7":[0.0760156555976441,-0.189826005049306,0.0900666937900155,0.258656885543387,-0.13177246170577,0.221605248577587,-0.146775673935895,0.178148088739581,0.0711747728181797,-0.27617728123333,0.42400811828483,-0.0965221754041827,-0.68344298099898,0.0652905908111907,0.154699866209253,0.571133232188231,-0.0101873264653915,-0.294178199381235,-0.933137677363763,0.0992556078769669,0.55196502110099],"dim8":[0.170958192438169,-0.299772728301717,0.20622205449915,-0.515644165725038,0.180907994977019,-0.123860835790051,-0.184654716626013,-0.240136100953326,0.811450446776724,0.215374369637769,0.312281641185887,-0.0950674101308416,-0.507945948679872,-0.318499144686586,-0.1788580690577,0.105037318028742,0.00162022001079925,0.768581806747525,0.0815634482345248,-0.288433342691517,-0.101125029893653],"labels":["C1","C2","C3","C4","C5","C6","C7","DG1T1","DG1T2","DG1T3","DG1T4","DG1T5","DG1T6","DG1T7","DG2T1","DG2T2","DG2T3","DG2T4","DG2T5","DG2T6","DG2T7"],"Id":["C1","C2","C3","C4","C5","C6","C7","DG1T1","DG1T2","DG1T3","DG1T4","DG1T5","DG1T6","DG1T7","DG2T1","DG2T2","DG2T3","DG2T4","DG2T5","DG2T6","DG2T7"],"Name":["30046-001","30046-002","30046-003","30046-004","30046-005","30046-006","30046-007","30046-009","30046-010","30046-011","30046-012","30046-013","30046-014","30046-015","30046-017","30046-018","30046-019","30046-020","30046-021","30046-022","30046-023"],"Group":["C","C","C","C","C","C","C","DG1","DG1","DG1","DG1","DG1","DG1","DG1","DG2","DG2","DG2","DG2","DG2","DG2","DG2"],"sizeFactor":[0.859861512725447,1.00976708687018,1.04218010146263,0.994694841009302,1.3449688074909,1.38082256577094,1.04815848648561,1.01908728538246,0.649413184462242,1.01938544658009,1.2455846048948,0.939195996340851,0.651962688114435,1.18349069669134,0.993957149823454,1.5640071852546,1.02677609555012,1.00224464875728,0.752291710806528,1.2062998189778,0.922064895562505],"replaceable":[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],"-":["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"],"- ":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"eigenData":{"name":[1,2,3,4,5,6,7,8],"eigen":[0.23,0.16,0.08,0.06,0.05,0.04,0.04,0.04]},"features":{"numeric":["sizeFactor","- "],"discrete":["labels","Id","Name","Group","replaceable","-"],"all":["sizeFactor","- ","labels","Id","Name","Group","replaceable","-"]},"continuousColour":false,"dimlist":["dim1","dim2","dim3","dim4","dim5","dim6","dim7","dim8"]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<section id="ma-plots" class="level4">
+<h4 class="anchored" data-anchor-id="ma-plots">MA plots</h4>
+<div class="cell" data-hash="DESeq2_cache/html/ma-plot-control-dg1_f5683db2536d0ae9ea1bc8443c1b5f2e">
+
+</div>
+<p><a href="./ma-plot-control-dg1.html">MA plots</a></p>
+<div class="cell" data-hash="DESeq2_cache/html/pca-explorer-control-dg1_399b7935205d04b92b598e7c2fb1a47e">
+
+</div>
+</section>
+</section>
+<section id="samples-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="samples-clustering">Samples clustering</h3>
+<div class="cell" data-hash="DESeq2_cache/html/rlog-transfomation-control-dg1_d94a3512df3557a3a2beccba1860fea7">
+
+</div>
+<div class="cell" data-hash="DESeq2_cache/html/sample-distances-control-dg1_8302efe96f41cc542b53f7ca6fc2fb88">
+<div class="cell-output-display">
+<p><img src="DESeq2_files/figure-html/sample-distances-control-dg1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="volcano-plot" class="level3">
+<h3 class="anchored" data-anchor-id="volcano-plot">Volcano plot</h3>
+<div class="cell" data-hash="DESeq2_cache/html/volcano-plot-control-dg1_10b7e0ff2958d14386c9a0c2c1957be3">
+<div class="cell-output-display">
+<p><img src="DESeq2_files/figure-html/volcano-plot-control-dg1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="control-vs-dg2" class="level2">
+<h2 class="anchored" data-anchor-id="control-vs-dg2">Control vs DG2</h2>
+<div class="cell" data-hash="DESeq2_cache/html/DESeq-modelling-count_9d7c39d3fb1e8c71f43494b59455c138">
+
+</div>
+<div class="cell" data-hash="DESeq2_cache/html/results_eb4bd668ba13c5d83b0e2c67222cdefd">
+<pre><code>## 
+## out of 2180 with nonzero total read count
+## adjusted p-value &lt; 0.1
+## LFC &gt; 0 (up)       : 2, 0.092%
+## LFC &lt; 0 (down)     : 11, 0.5%
+## outliers [1]       : 0, 0%
+## low counts [2]     : 212, 9.7%
+## (mean count &lt; 11)
+## [1] see 'cooksCutoff' argument of ?results
+## [2] see 'independentFiltering' argument of ?results</code></pre>
+</div>
+<section id="significant-genes-with-the-strongest-up-regulation-1" class="level3">
+<h3 class="anchored" data-anchor-id="significant-genes-with-the-strongest-up-regulation-1">Significant genes with the strongest up regulation</h3>
+<div class="cell" data-hash="DESeq2_cache/html/genes-strongest-up-regulation_13a0f976a8f62cde97fe9227cf449201">
+<pre><code>## log2 fold change (MLE): Group DG2 vs C 
+## Wald test p-value: Group DG2 vs C 
+## DataFrame with 2 rows and 6 columns
+##                 baseMean log2FoldChange     lfcSE      stat      pvalue
+##                &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt;
+## Cluster-4989.0   53.9402        2.11753  0.489201   4.32854 1.50104e-05
+## Cluster-1248.0   16.7584        2.42456  0.706770   3.43048 6.02512e-04
+##                      padj
+##                 &lt;numeric&gt;
+## Cluster-4989.0 0.00738512
+## Cluster-1248.0 0.09881204</code></pre>
+</div>
+</section>
+<section id="significant-genes-with-the-strongest-down-regulation-1" class="level3">
+<h3 class="anchored" data-anchor-id="significant-genes-with-the-strongest-down-regulation-1">Significant genes with the strongest down regulation</h3>
+<div class="cell" data-hash="DESeq2_cache/html/genes-strongest-down-regulation_838c08381ad8c00f19ab3c722ad4842b">
+<pre><code>## log2 fold change (MLE): Group DG2 vs C 
+## Wald test p-value: Group DG2 vs C 
+## DataFrame with 11 rows and 6 columns
+##                 baseMean log2FoldChange     lfcSE      stat      pvalue
+##                &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt;
+## Cluster-4181.0 1739.6593       -1.46477  0.425791  -3.44011 5.81483e-04
+## Cluster-5090.0 1753.5071       -1.49264  0.430521  -3.46705 5.26204e-04
+## Cluster-3299.0  875.2495       -2.13597  0.574315  -3.71917 1.99882e-04
+## Cluster-3204.0  450.9683       -2.46695  0.615370  -4.00889 6.10052e-05
+## Cluster-4009.0   50.5302       -2.61182  0.702265  -3.71914 1.99900e-04
+## Cluster-2041.0   41.8972       -2.68140  0.700616  -3.82721 1.29604e-04
+## Cluster-5165.0  110.5364       -3.06732  0.737606  -4.15848 3.20374e-05
+## Cluster-1863.0  118.1395       -3.24688  0.744006  -4.36404 1.27680e-05
+## Cluster-3339.0  238.4827       -3.49332  0.742120  -4.70721 2.51129e-06
+## Cluster-3207.0  122.2578       -3.59574  0.773866  -4.64646 3.37685e-06
+## Cluster-1255.0  266.8146       -6.79768  1.995104  -3.40718 6.56381e-04
+##                      padj
+##                 &lt;numeric&gt;
+## Cluster-4181.0 0.09881204
+## Cluster-5090.0 0.09881204
+## Cluster-3299.0 0.04371153
+## Cluster-3204.0 0.02000971
+## Cluster-4009.0 0.04371153
+## Cluster-2041.0 0.03643732
+## Cluster-5165.0 0.01260993
+## Cluster-1863.0 0.00738512
+## Cluster-3339.0 0.00332282
+## Cluster-3207.0 0.00332282
+## Cluster-1255.0 0.09936599</code></pre>
+</div>
+</section>
+<section id="report-1" class="level3">
+<h3 class="anchored" data-anchor-id="report-1">Report</h3>
+<div class="cell" data-hash="DESeq2_cache/html/glimma-report_1d00201819eb5522e1616c353822cdbe">
+<div class="cell-output-display">
+<div id="htmlwidget-4e5d20c6b2e9c63f2e03" style="width:100%;height:650px;" class="glimmaMDS html-widget "></div>
+<script type="application/json" data-for="htmlwidget-4e5d20c6b2e9c63f2e03">{"x":{"data":{"mdsData":{"dim1":[-0.910506014273919,-0.974748864665895,-0.579612492521015,-0.501325786855989,1.50437272924944,0.356742107769857,1.71881473985559,-0.671771339063998,0.578188876156406,0.296077840471057,0.000467792083129729,-0.607062745743249,0.474393823676136,-0.402739856666745,-1.37033482320706,-0.226959843768956,0.594805271242107,-1.10760047693535,0.0364439305524559,0.0970559186488084,1.6952992139972],"dim2":[-0.418888068724432,0.0195407657746908,0.00437025487183033,-0.432791058126543,1.48974258041405,1.24107531273986,-0.668782264015055,-0.224146927487065,-0.932422302086695,0.537357686274596,0.850847903541733,-0.670658764733249,0.267952998011088,0.5173309569988,-0.465741504678273,0.769692506674623,-0.907721541787572,0.0493881025508039,-0.244720467707722,0.465039009475315,-1.2464651779808],"dim3":[-0.0820220258416822,0.0411766966341502,0.283639662397822,0.899500388928062,-0.132843130001681,0.505210595749961,0.0716017939109767,0.0188021084352092,-0.173884452800425,0.213954071010933,-0.557343230828021,-0.861327008390234,0.160534785125517,-0.132698966025309,-0.0623925455394266,0.281273158883494,-0.784139132249579,0.567648480924332,0.261664179069454,-1.13728370040645,0.618928271012896],"dim4":[0.863945296267374,-0.387047890638022,0.01811413999434,0.335661693097376,0.310837042897614,0.178992297105757,0.279640040894944,-0.276146267193987,-0.525929508231673,0.217652124317976,-0.563164729762055,-0.539172915096331,-0.390274722781635,0.0227168971922271,0.0756327124694912,-0.038477820126337,1.18384706270588,0.159130259539461,-0.276414336670613,-0.109893035756478,-0.539648340225302],"dim5":[0.0222393691598395,-0.0884157059163785,0.294503546571736,0.677234008546337,-0.116913399659097,-0.505778050290842,-0.43394710673689,-0.151933836721707,0.759702320951261,-0.176405667197027,0.131741959568199,-0.683636150795339,0.579196082320307,-0.035120908324148,-0.33814257021813,0.387322736559338,0.202903861852225,-0.484852880337861,0.0991754862690669,0.280282042446519,-0.419155138047409],"dim6":[0.527690989142142,0.22765519880262,-0.109976278035444,-0.816285697823276,-0.345759070392706,-0.143292868896789,-0.343824748548945,0.507571496552335,-0.194829302907624,0.317458738212249,0.0220932112487775,-0.695060264555855,0.546166274978344,0.0877509946271672,-0.183576540614116,-0.0231931636463663,0.144864577810896,0.103627791729536,-0.256648169642133,0.110880872826347,0.516685959132841],"dim7":[0.0760156555976441,-0.189826005049306,0.0900666937900155,0.258656885543387,-0.13177246170577,0.221605248577587,-0.146775673935895,0.178148088739581,0.0711747728181797,-0.27617728123333,0.42400811828483,-0.0965221754041827,-0.68344298099898,0.0652905908111907,0.154699866209253,0.571133232188231,-0.0101873264653915,-0.294178199381235,-0.933137677363763,0.0992556078769669,0.55196502110099],"dim8":[0.170958192438169,-0.299772728301717,0.20622205449915,-0.515644165725038,0.180907994977019,-0.123860835790051,-0.184654716626013,-0.240136100953326,0.811450446776724,0.215374369637769,0.312281641185887,-0.0950674101308416,-0.507945948679872,-0.318499144686586,-0.1788580690577,0.105037318028742,0.00162022001079925,0.768581806747525,0.0815634482345248,-0.288433342691517,-0.101125029893653],"labels":["C1","C2","C3","C4","C5","C6","C7","DG1T1","DG1T2","DG1T3","DG1T4","DG1T5","DG1T6","DG1T7","DG2T1","DG2T2","DG2T3","DG2T4","DG2T5","DG2T6","DG2T7"],"Id":["C1","C2","C3","C4","C5","C6","C7","DG1T1","DG1T2","DG1T3","DG1T4","DG1T5","DG1T6","DG1T7","DG2T1","DG2T2","DG2T3","DG2T4","DG2T5","DG2T6","DG2T7"],"Name":["30046-001","30046-002","30046-003","30046-004","30046-005","30046-006","30046-007","30046-009","30046-010","30046-011","30046-012","30046-013","30046-014","30046-015","30046-017","30046-018","30046-019","30046-020","30046-021","30046-022","30046-023"],"Group":["C","C","C","C","C","C","C","DG1","DG1","DG1","DG1","DG1","DG1","DG1","DG2","DG2","DG2","DG2","DG2","DG2","DG2"],"sizeFactor":[0.859861512725447,1.00976708687018,1.04218010146263,0.994694841009302,1.3449688074909,1.38082256577094,1.04815848648561,1.01908728538246,0.649413184462242,1.01938544658009,1.2455846048948,0.939195996340851,0.651962688114435,1.18349069669134,0.993957149823454,1.5640071852546,1.02677609555012,1.00224464875728,0.752291710806528,1.2062998189778,0.922064895562505],"replaceable":[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],"-":["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"],"- ":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"eigenData":{"name":[1,2,3,4,5,6,7,8],"eigen":[0.23,0.16,0.08,0.06,0.05,0.04,0.04,0.04]},"features":{"numeric":["sizeFactor","- "],"discrete":["labels","Id","Name","Group","replaceable","-"],"all":["sizeFactor","- ","labels","Id","Name","Group","replaceable","-"]},"continuousColour":false,"dimlist":["dim1","dim2","dim3","dim4","dim5","dim6","dim7","dim8"]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<section id="ma-plots-1" class="level4">
+<h4 class="anchored" data-anchor-id="ma-plots-1">MA plots</h4>
+<div class="cell" data-hash="DESeq2_cache/html/ma-plot_f5a2db7ef10c005167a282059c084ea9">
+
+</div>
+<p><a href="./ma-plot.html">MA plots</a></p>
+<div class="cell" data-hash="DESeq2_cache/html/pca-explorer_8772639b26e2f198269c98bd03dbcf1c">
+
+</div>
+</section>
+</section>
+<section id="samples-clustering-1" class="level3">
+<h3 class="anchored" data-anchor-id="samples-clustering-1">Samples clustering</h3>
+<div class="cell" data-hash="DESeq2_cache/html/rlog-transfomation_a28128f1f62e70126efda59f7a4b067d">
+
+</div>
+<div class="cell" data-hash="DESeq2_cache/html/sample-distances_4461cc52970085b226c62c03eacb3858">
+<div class="cell-output-display">
+<p><img src="DESeq2_files/figure-html/sample-distances-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="volcano-plot-1" class="level3">
+<h3 class="anchored" data-anchor-id="volcano-plot-1">Volcano plot</h3>
+<div class="cell" data-hash="DESeq2_cache/html/volcano-plot_e4d060b4510b414d54173b0febe11d49">
+<div class="cell-output-display">
+<p><img src="DESeq2_files/figure-html/volcano-plot-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

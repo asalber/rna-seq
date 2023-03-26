@@ -1,0 +1,55 @@
+project:
+  title: RNA-Seq
+  type: website
+  output-dir: docs
+  preview:
+    port: 1313
+
+website:
+  favicon: "img/logos/favicon.ico"
+  reader-mode: true
+  # sidebar: 
+  #   style: floating
+  #   logo: img/logos/aprendeconalf.png
+  navbar:
+    background: primary
+    search: true
+    left:
+      - href: index.qmd
+        text: Introduction
+      - href: descriptive.qmd
+        text: Descriptive statistics
+      - href: DESeq2.qmd
+        text: DESeq2
+      - href: edgeR.qmd
+        text: EdgeR
+
+bibliography: bibliography.bib
+
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    df-print: paged
+    toc: true
+
+knitr:
+  opts_chunk: 
+    collapse: true
+    echo: false
+    # cache: true
+    # prompt: false
+    # tidy: true
+    # comment: "#>"
+    message: false
+    warning: false
+    # dev: "png"
+    # dev.args: list(type="cairo")
+    # dpi: 300
+
+execute:
+  cache: true
+  #freeze: auto
+
+

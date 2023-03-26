@@ -1,0 +1,84 @@
+---
+title: Descriptive statistics of read counts
+---
+
+```{r libraries}
+#| results: hide
+.packages <- c("knitr", "tidyverse", "kableExtra", "edgeR")
+.installed <- .packages %in% installed.packages()
+if (length(.packages[!.installed])>0) install.packages(.packages[!.installed])
+lapply(.packages, library, character.only=T)
+```
+
+```{r colors}
+color1 <- "#00BFC4"
+color2 <- "#F8766D"
+color3 <- "#7CAE00"
+color4 <- "#C77CFF"
+```
+
+```{r data-loading}
+# reads counts summary
+source("preprocesing.R")
+```
+
+## Reads counts summary
+
+```{r reads-summary}
+df_reads_longer %>% 
+    group_by(Group, Id) %>%
+    summarise(`Total counts` = sum(Count)) %>%
+    kable(caption = paste0("Total number of reads per individual.")) %>%
+  kable_styling(bootstrap_options = "hover", full_width = F)
+```
+
+```{r total-reads-distribution}
+df_reads_longer %>% 
+    group_by(Group, Id) %>%
+    summarise(`Total counts` = sum(Count)) %>%
+    ggplot(aes(x = Id, weight = `Total counts`, fill = Group)) +
+    geom_bar() +
+    labs(title = "Total number of reads per individual", x = "Individual", y = "Total counts")
+```
+
+
+## Reads distributions per individual
+
+<!-- ```{r reads-distribution}
+reads_cpm_longer %>%
+    mutate(log2CPM = log2(CPM)) %>%
+    ggplot(aes(y = log2CPM, x = Id, fill = Group)) +
+    geom_boxplot()
+``` -->
+
+<!-- cpm(reads) -->
+
+## Hierarchical clustering
+
+<!-- plot(hclust(dist(t(reads$counts)))) -->
+
+## Multidimensional scaling
+
+```{r multidimensional-scaling}
+plotMDS(reads)
+```
+
+## Means difference plots
+
+```{r means-differences-plot}
+for (i in 1:21) {
+    plotMD(reads, column = i)
+    abline(h=0, col="red", lty = 2, lwd = 2) 
+}
+```
+
+## Quasi-likelihood F-test
+
+```{r}
+design <- model.matrix(~df_groups$Group)
+reads <- estimateDisp(reads, design)
+fit <- glmQLFit(reads, design)
+qlf <- glmQLFTest(fit, coef=2)
+topTags(qlf)
+```
+
