@@ -10,8 +10,7 @@ if (length(.packages[!.installed])>0) install.packages(.packages[!.installed])
 lapply(.packages, library, character.only=T)
 # edgeR installation
 if (!require("edgeR", quietly = TRUE))
-    install.packages("edgeR")
-BiocManager::install(c("edgeR"))
+    BiocManager::install(c("edgeR"))
 library(edgeR)
 ```
 
@@ -27,44 +26,39 @@ color4 <- "#C77CFF"
 source("preprocesing.R")
 ```
 
-```{r reads-loading}
-# reads loading
-reads <- DGEList(counts = matrix_reads, group = df_groups$Group)
-```
-
 ```{r normalization}
 # TMM Normalization
 # Single-cell RNA-seq requires a specialized normalization method
-reads <- calcNormFactors(reads)
-#reads$samples
-```
-
-## Hierarchical clustering
-
-<!-- plot(hclust(dist(t(reads$counts)))) -->
-
-## Multidimensional scaling
-
-```{r multidimensional-scaling}
-plotMDS(reads)
-```
-
-## Means difference plots
-
-```{r means-differences-plot}
-for (i in 1:21) {
-    plotMD(reads, column = i)
-    abline(h=0, col="red", lty = 2, lwd = 2) 
-}
+reads_filtered <- calcNormFactors(reads_filtered)
+#Normalization factors
+#reads_filtered$samples
 ```
 
 ## Quasi-likelihood F-test
 
 ```{r}
 design <- model.matrix(~df_groups$Group)
-reads <- estimateDisp(reads, design)
-fit <- glmQLFit(reads, design)
+reads_filtered <- estimateDisp(reads_filtered, design)
+fit <- glmQLFit(reads_filtered, design)
 qlf <- glmQLFTest(fit, coef=2)
-topTags(qlf)
+result <- as.data.frame(topTags(qlf), n=nrow(matrix_reads))
+result %>% kable(caption = paste0("Genes with a significant differential expression")) %>%
+  kable_styling(bootstrap_options = "hover", full_width = F)
 ```
 
+```{r}
+# Design matrix not provided.
+# reads_filtered <- estimateDisp(reads_filtered)
+# et <- exactTest(reads_filtered)
+# result <- as.data.frame(topTags(et), n=nrow(matrix_reads))
+# result
+```
+
+## Means difference plots
+
+```{r means-differences-plot}
+for (i in 1:21) {
+    plotMD(reads_filtered, column = i)
+    abline(h=0, col="red", lty = 2, lwd = 2) 
+}
+```

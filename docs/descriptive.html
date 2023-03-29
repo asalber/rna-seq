@@ -125,12 +125,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#reads-counts-summary" id="toc-reads-counts-summary" class="nav-link active" data-scroll-target="#reads-counts-summary">Reads counts summary</a></li>
+  <li><a href="#distribution-of-total-reads-counts-by-gene" id="toc-distribution-of-total-reads-counts-by-gene" class="nav-link active" data-scroll-target="#distribution-of-total-reads-counts-by-gene">Distribution of total reads counts by gene</a></li>
+  <li><a href="#filter-genes-with-low-expression" id="toc-filter-genes-with-low-expression" class="nav-link" data-scroll-target="#filter-genes-with-low-expression">Filter genes with low expression</a></li>
+  <li><a href="#reads-counts-summary" id="toc-reads-counts-summary" class="nav-link" data-scroll-target="#reads-counts-summary">Reads counts summary</a></li>
   <li><a href="#reads-distributions-per-individual" id="toc-reads-distributions-per-individual" class="nav-link" data-scroll-target="#reads-distributions-per-individual">Reads distributions per individual</a></li>
   <li><a href="#hierarchical-clustering" id="toc-hierarchical-clustering" class="nav-link" data-scroll-target="#hierarchical-clustering">Hierarchical clustering</a></li>
   <li><a href="#multidimensional-scaling" id="toc-multidimensional-scaling" class="nav-link" data-scroll-target="#multidimensional-scaling">Multidimensional scaling</a></li>
-  <li><a href="#means-difference-plots" id="toc-means-difference-plots" class="nav-link" data-scroll-target="#means-difference-plots">Means difference plots</a></li>
-  <li><a href="#quasi-likelihood-f-test" id="toc-quasi-likelihood-f-test" class="nav-link" data-scroll-target="#quasi-likelihood-f-test">Quasi-likelihood F-test</a></li>
   </ul>
 </nav>
     </div>
@@ -163,9 +163,76 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell" data-hash="descriptive_cache/html/data-loading_9ce993e641e554adff86d4e3e220c1fc">
 
 </div>
+<section id="distribution-of-total-reads-counts-by-gene" class="level2">
+<h2 class="anchored" data-anchor-id="distribution-of-total-reads-counts-by-gene">Distribution of total reads counts by gene</h2>
+<div class="cell" data-hash="descriptive_cache/html/distribution-total-reads-by-gene_e981c8536411e388b752e9b7cb45cba0">
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/distribution-total-reads-by-gene-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell" data-hash="descriptive_cache/html/frequencies-low-high-expressed-genes_3887b310da25f8c4aa7ad43cf6afe4e1">
+<div class="cell-output-display">
+
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Number of genes with a total reads counts below or above 20.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Var1 </th>
+   <th style="text-align:right;"> Freq </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> [0,20] </td>
+   <td style="text-align:right;"> 981 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (20,Inf] </td>
+   <td style="text-align:right;"> 4466 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+<div class="cell-output-display">
+
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Number of genes with a total reads counts below or above 10 by Group.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> C </th>
+   <th style="text-align:right;"> DG1 </th>
+   <th style="text-align:right;"> DG2 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> [0,10] </td>
+   <td style="text-align:right;"> 1338 </td>
+   <td style="text-align:right;"> 1636 </td>
+   <td style="text-align:right;"> 1500 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (10,Inf] </td>
+   <td style="text-align:right;"> 4109 </td>
+   <td style="text-align:right;"> 3811 </td>
+   <td style="text-align:right;"> 3947 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="filter-genes-with-low-expression" class="level2">
+<h2 class="anchored" data-anchor-id="filter-genes-with-low-expression">Filter genes with low expression</h2>
+<p>We are going to filter genes with more than 1 reads per million in at least 7 individuals.</p>
+<p>Number of genes removed: 3065</p>
+</section>
 <section id="reads-counts-summary" class="level2">
 <h2 class="anchored" data-anchor-id="reads-counts-summary">Reads counts summary</h2>
-<div class="cell" data-hash="descriptive_cache/html/reads-summary_1c2859b12d6cb2fb12f4b68f7d20d64f">
+<div class="cell" data-hash="descriptive_cache/html/reads-summary_8507b58d0ef80abea905cf6b5ca4113a">
 <div class="cell-output-display">
 
 <table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -181,114 +248,114 @@ ul.task-list li input[type="checkbox"] {
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> C1 </td>
-   <td style="text-align:right;"> 6952736 </td>
+   <td style="text-align:right;"> 6946249 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> C2 </td>
-   <td style="text-align:right;"> 9449926 </td>
+   <td style="text-align:right;"> 9443837 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> C3 </td>
-   <td style="text-align:right;"> 8314048 </td>
+   <td style="text-align:right;"> 8307870 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> C4 </td>
-   <td style="text-align:right;"> 7786263 </td>
+   <td style="text-align:right;"> 7779359 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> C5 </td>
-   <td style="text-align:right;"> 8728897 </td>
+   <td style="text-align:right;"> 8717672 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> C6 </td>
-   <td style="text-align:right;"> 9612074 </td>
+   <td style="text-align:right;"> 9601832 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> C7 </td>
-   <td style="text-align:right;"> 7796738 </td>
+   <td style="text-align:right;"> 7789549 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG1 </td>
    <td style="text-align:left;"> DG1T1 </td>
-   <td style="text-align:right;"> 9269936 </td>
+   <td style="text-align:right;"> 9263689 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG1 </td>
    <td style="text-align:left;"> DG1T2 </td>
-   <td style="text-align:right;"> 7802084 </td>
+   <td style="text-align:right;"> 7797576 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG1 </td>
    <td style="text-align:left;"> DG1T3 </td>
-   <td style="text-align:right;"> 7594457 </td>
+   <td style="text-align:right;"> 7588203 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG1 </td>
    <td style="text-align:left;"> DG1T4 </td>
-   <td style="text-align:right;"> 10014545 </td>
+   <td style="text-align:right;"> 10006239 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG1 </td>
    <td style="text-align:left;"> DG1T5 </td>
-   <td style="text-align:right;"> 10061782 </td>
+   <td style="text-align:right;"> 10056498 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG1 </td>
    <td style="text-align:left;"> DG1T6 </td>
-   <td style="text-align:right;"> 5362410 </td>
+   <td style="text-align:right;"> 5357884 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG1 </td>
    <td style="text-align:left;"> DG1T7 </td>
-   <td style="text-align:right;"> 8820109 </td>
+   <td style="text-align:right;"> 8813195 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG2 </td>
    <td style="text-align:left;"> DG2T1 </td>
-   <td style="text-align:right;"> 8752697 </td>
+   <td style="text-align:right;"> 8746669 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG2 </td>
    <td style="text-align:left;"> DG2T2 </td>
-   <td style="text-align:right;"> 10580231 </td>
+   <td style="text-align:right;"> 10568886 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG2 </td>
    <td style="text-align:left;"> DG2T3 </td>
-   <td style="text-align:right;"> 8168934 </td>
+   <td style="text-align:right;"> 8161995 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG2 </td>
    <td style="text-align:left;"> DG2T4 </td>
-   <td style="text-align:right;"> 7273059 </td>
+   <td style="text-align:right;"> 7266797 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG2 </td>
    <td style="text-align:left;"> DG2T5 </td>
-   <td style="text-align:right;"> 6697397 </td>
+   <td style="text-align:right;"> 6692811 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG2 </td>
    <td style="text-align:left;"> DG2T6 </td>
-   <td style="text-align:right;"> 11014448 </td>
+   <td style="text-align:right;"> 11007564 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> DG2 </td>
    <td style="text-align:left;"> DG2T7 </td>
-   <td style="text-align:right;"> 7875376 </td>
+   <td style="text-align:right;"> 7869289 </td>
   </tr>
 </tbody>
 </table>
 
 </div>
 </div>
-<div class="cell" data-hash="descriptive_cache/html/total-reads-distribution_7f6fd05796b8cd6bc78bbc10d8fac39e">
+<div class="cell" data-hash="descriptive_cache/html/total-reads-distribution_c999ad39584b3a47eceb24ee9cfa28c6">
 <div class="cell-output-display">
 <p><img src="descriptive_files/figure-html/total-reads-distribution-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -296,13 +363,11 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="reads-distributions-per-individual" class="level2">
 <h2 class="anchored" data-anchor-id="reads-distributions-per-individual">Reads distributions per individual</h2>
-<!-- ```{r reads-distribution}
-reads_cpm_longer %>%
-    mutate(log2CPM = log2(CPM)) %>%
-    ggplot(aes(y = log2CPM, x = Id, fill = Group)) +
-    geom_boxplot()
-``` -->
-<!-- cpm(reads) -->
+<div class="cell" data-hash="descriptive_cache/html/reads-distribution_b09e11af297f304d33a9e3b56fe064ce">
+<div class="cell-output-display">
+<p><img src="descriptive_files/figure-html/reads-distribution-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="hierarchical-clustering" class="level2">
 <h2 class="anchored" data-anchor-id="hierarchical-clustering">Hierarchical clustering</h2>
@@ -310,95 +375,10 @@ reads_cpm_longer %>%
 </section>
 <section id="multidimensional-scaling" class="level2">
 <h2 class="anchored" data-anchor-id="multidimensional-scaling">Multidimensional scaling</h2>
-<div class="cell" data-hash="descriptive_cache/html/multidimensional-scaling_5b2097487284a75df9284b4f28451c06">
+<div class="cell" data-hash="descriptive_cache/html/multidimensional-scaling_4be15e8aa0477814d43709d9acb44131">
 <div class="cell-output-display">
 <p><img src="descriptive_files/figure-html/multidimensional-scaling-1.png" class="img-fluid" width="672"></p>
 </div>
-</div>
-</section>
-<section id="means-difference-plots" class="level2">
-<h2 class="anchored" data-anchor-id="means-difference-plots">Means difference plots</h2>
-<div class="cell" data-hash="descriptive_cache/html/means-differences-plot_0f1d49c688f4a4b89f040be39f8723ca">
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-3.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-4.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-5.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-6.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-7.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-8.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-9.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-10.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-11.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-12.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-13.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-14.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-15.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-16.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-17.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-18.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-19.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-20.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="descriptive_files/figure-html/means-differences-plot-21.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="quasi-likelihood-f-test" class="level2">
-<h2 class="anchored" data-anchor-id="quasi-likelihood-f-test">Quasi-likelihood F-test</h2>
-<div class="cell" data-hash="descriptive_cache/html/unnamed-chunk-1_39ef01d038ab8bf319249985c1353344">
-<pre><code>## Coefficient:  df_groups$GroupDG1 
-##                    logFC    logCPM        F       PValue       FDR
-## Cluster-5165.0 -4.114276 4.0233936 19.50550 0.0002073674 0.1819046
-## Cluster-3339.0 -4.146306 5.1269033 19.16437 0.0002282366 0.1819046
-## Cluster-1863.0 -3.809226 4.1125069 17.07320 0.0004188628 0.2225558
-## Cluster-3916.0 -3.248260 2.9984883 12.46676 0.0018277530 0.4396343
-## Cluster-2027.0 -1.268149 4.4156135 11.82274 0.0022854994 0.4396343
-## Cluster-930.0  -4.490774 0.2367101 11.79402 0.0023086544 0.4396343
-## Cluster-3207.0 -3.247828 4.1449533 11.64656 0.0024316651 0.4396343
-## Cluster-4009.0 -2.732013 2.8709890 11.10962 0.0029442589 0.4396343
-## Cluster-4652.0 -1.789214 5.2329537 10.78331 0.0033130672 0.4396343
-## Cluster-3299.0 -2.220885 6.9102658 10.72899 0.0033792555 0.4396343</code></pre>
 </div>
 
 

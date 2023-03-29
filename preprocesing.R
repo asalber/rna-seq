@@ -28,20 +28,20 @@ df_reads_longer <- df_reads %>%
 # reads loading
 reads <- DGEList(counts = matrix_reads, group = df_groups$Group)
 
-# Filtering genes with more than 5 reads in at least 3 individuals
-# keep <- rowSums(cpm(reads)> 0.5) >= 7
-# table(keep)
+## FILTERING
+# Filtering genes with more than 1 reads per million in at least 7 individuals
+keep <- rowSums(cpm(reads)> 1) >= 7
 
 # Automatic filtering
-keep <- filterByExpr(reads)
-reads <- reads[keep, , keep.lib.sizes=F]
+#keep <- filterByExpr(reads)
+reads_filtered <- reads[keep, , keep.lib.sizes=F]
 
 # Filter also the longer data frame
-df_reads_longer <- df_reads_longer %>%
+df_reads_filtered_longer <- df_reads_longer %>%
     filter(CLUSTER %in% names(keep[keep==T]))
 
 # Reads counts per million of reads
-reads_cpm <- cpm(reads)
-reads_cpm_longer <- as.data.frame(reads_cpm) %>%
+reads_filtered_cpm <- cpm(reads)
+reads_filtered_cpm_longer <- as.data.frame(reads_filtered_cpm) %>%
     pivot_longer(cols = C1:DG2T7, names_to = "Id", values_to = "CPM") %>%
     left_join(df_groups, by = "Id")

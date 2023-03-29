@@ -39,7 +39,9 @@ source("preprocesing.R")
 ```
 
 ```{r create-DESeq2-data-object}
-dds <- DESeqDataSetFromMatrix(countData = reads, colData = df_groups, design = ~ Group)
+dds <- DESeqDataSetFromMatrix(countData = reads_filtered, colData = df_groups, design = ~ Group)
+# Select reference level for comparisons
+#dds$condition <- relevel(dds$condition, ref = "C")
 ```
 
 ## Control vs DG1
@@ -51,6 +53,7 @@ dds <- DESeq(dds)
 ```{r results-control-dg1}
 res <- results(dds, contrast = c("Group", "DG1", "C") )
 summary(res)
+write.csv(as.data.frame(res), file="results-deseq2.csv")
 ```
 
 ### Significant genes with the strongest up regulation
@@ -59,6 +62,7 @@ summary(res)
 resSig <- subset(res, res$padj < 0.1 )
 resSigUp <- resSig[resSig$log2FoldChange > 0, ]
 resSigUp[order(resSigUp$log2FoldChange), ]
+write.csv(as.data.frame(resSigUp), file="results-deseq2-up.csv")
 ```
 
 ### Significant genes with the strongest down regulation
@@ -78,10 +82,10 @@ glimmaMDS(dds, height=900)
 
 ```{r ma-plot-control-dg1}
 #library(edgeR)
-htmlwidgets::saveWidget(glimmaMA(dds, groups = colData(dds)$Group), "ma-plot.html")
+htmlwidgets::saveWidget(glimmaMA(dds, groups = colData(dds)$Group), "img/ma-plot-control-dg1.html")
 ```
 
-[MA plots](./ma-plot-control-dg1.html)
+[MA plots](img/ma-plot-control-dg1.html)
 
 ```{r pca-explorer-control-dg1}
 #pcaExplorer(dds = dds)
@@ -155,10 +159,10 @@ glimmaMDS(dds, height=900)
 
 ```{r ma-plot}
 #library(edgeR)
-htmlwidgets::saveWidget(glimmaMA(dds, groups = colData(dds)$Group), "ma-plot.html")
+htmlwidgets::saveWidget(glimmaMA(dds, groups = colData(dds)$Group), "img/ma-plot-control-dg2.html")
 ```
 
-[MA plots](./ma-plot.html)
+[MA plots](img/ma-plot-control-dg2.html)
 
 ```{r pca-explorer}
 #pcaExplorer(dds = dds)

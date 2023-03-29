@@ -62,6 +62,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -123,10 +125,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#hierarchical-clustering" id="toc-hierarchical-clustering" class="nav-link active" data-scroll-target="#hierarchical-clustering">Hierarchical clustering</a></li>
-  <li><a href="#multidimensional-scaling" id="toc-multidimensional-scaling" class="nav-link" data-scroll-target="#multidimensional-scaling">Multidimensional scaling</a></li>
+  <li><a href="#quasi-likelihood-f-test" id="toc-quasi-likelihood-f-test" class="nav-link active" data-scroll-target="#quasi-likelihood-f-test">Quasi-likelihood F-test</a></li>
   <li><a href="#means-difference-plots" id="toc-means-difference-plots" class="nav-link" data-scroll-target="#means-difference-plots">Means difference plots</a></li>
-  <li><a href="#quasi-likelihood-f-test" id="toc-quasi-likelihood-f-test" class="nav-link" data-scroll-target="#quasi-likelihood-f-test">Quasi-likelihood F-test</a></li>
   </ul>
 </nav>
     </div>
@@ -150,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="cell" data-hash="edgeR_cache/html/libraries_9b25232c23da8daa373cb18e9e47d859">
+<div class="cell" data-hash="edgeR_cache/html/libraries_b484ca129a5cd9d6bffddb8fc799704c">
 
 </div>
 <div class="cell" data-hash="edgeR_cache/html/base-colors_301a71777bcf98405000433354841d0d">
@@ -159,27 +159,119 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell" data-hash="edgeR_cache/html/data-loading_5e14fafe48141e6f12cc044c252b902c">
 
 </div>
-<div class="cell" data-hash="edgeR_cache/html/reads-loading_1fe8708b7e50000479e9898a3a9ba9ea">
+<div class="cell" data-hash="edgeR_cache/html/normalization_7c1dc6ef062217ac7de685b5e8e14b83">
 
 </div>
-<div class="cell" data-hash="edgeR_cache/html/normalization_89614664e180b2fdb8c87019359478a5">
-
-</div>
-<section id="hierarchical-clustering" class="level2">
-<h2 class="anchored" data-anchor-id="hierarchical-clustering">Hierarchical clustering</h2>
-<!-- plot(hclust(dist(t(reads$counts)))) -->
-</section>
-<section id="multidimensional-scaling" class="level2">
-<h2 class="anchored" data-anchor-id="multidimensional-scaling">Multidimensional scaling</h2>
-<div class="cell" data-hash="edgeR_cache/html/multidimensional-scaling_7dfdd6cfdf868365f8d0c36ad10d5941">
+<section id="quasi-likelihood-f-test" class="level2">
+<h2 class="anchored" data-anchor-id="quasi-likelihood-f-test">Quasi-likelihood F-test</h2>
+<div class="cell" data-hash="edgeR_cache/html/unnamed-chunk-1_e22d8a6cc91e88b42edfa24e88377fce">
 <div class="cell-output-display">
-<p><img src="edgeR_files/figure-html/multidimensional-scaling-1.png" class="img-fluid" width="672"></p>
+
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Genes with a significant differential expression</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> logFC </th>
+   <th style="text-align:right;"> logCPM </th>
+   <th style="text-align:right;"> F </th>
+   <th style="text-align:right;"> PValue </th>
+   <th style="text-align:right;"> FDR </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Cluster-5165.0 </td>
+   <td style="text-align:right;"> -3.640547 </td>
+   <td style="text-align:right;"> 3.7146159 </td>
+   <td style="text-align:right;"> 18.191061 </td>
+   <td style="text-align:right;"> 0.0002891 </td>
+   <td style="text-align:right;"> 0.4253314 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cluster-3339.0 </td>
+   <td style="text-align:right;"> -3.635756 </td>
+   <td style="text-align:right;"> 4.8031639 </td>
+   <td style="text-align:right;"> 17.475439 </td>
+   <td style="text-align:right;"> 0.0003571 </td>
+   <td style="text-align:right;"> 0.4253314 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cluster-1863.0 </td>
+   <td style="text-align:right;"> -3.309628 </td>
+   <td style="text-align:right;"> 3.8121714 </td>
+   <td style="text-align:right;"> 15.104159 </td>
+   <td style="text-align:right;"> 0.0007421 </td>
+   <td style="text-align:right;"> 0.5891895 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cluster-3207.0 </td>
+   <td style="text-align:right;"> -2.892562 </td>
+   <td style="text-align:right;"> 3.8836696 </td>
+   <td style="text-align:right;"> 11.008157 </td>
+   <td style="text-align:right;"> 0.0029893 </td>
+   <td style="text-align:right;"> 0.9929449 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cluster-3916.0 </td>
+   <td style="text-align:right;"> -2.833417 </td>
+   <td style="text-align:right;"> 2.7754313 </td>
+   <td style="text-align:right;"> 10.859413 </td>
+   <td style="text-align:right;"> 0.0031558 </td>
+   <td style="text-align:right;"> 0.9929449 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cluster-4009.0 </td>
+   <td style="text-align:right;"> -2.397311 </td>
+   <td style="text-align:right;"> 2.6547976 </td>
+   <td style="text-align:right;"> 10.481867 </td>
+   <td style="text-align:right;"> 0.0036262 </td>
+   <td style="text-align:right;"> 0.9929449 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cluster-3167.0 </td>
+   <td style="text-align:right;"> -1.670907 </td>
+   <td style="text-align:right;"> 0.1120892 </td>
+   <td style="text-align:right;"> 10.007158 </td>
+   <td style="text-align:right;"> 0.0043300 </td>
+   <td style="text-align:right;"> 0.9929449 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cluster-3204.0 </td>
+   <td style="text-align:right;"> -2.037118 </td>
+   <td style="text-align:right;"> 5.7563894 </td>
+   <td style="text-align:right;"> 9.607852 </td>
+   <td style="text-align:right;"> 0.0050390 </td>
+   <td style="text-align:right;"> 0.9929449 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cluster-3299.0 </td>
+   <td style="text-align:right;"> -1.865547 </td>
+   <td style="text-align:right;"> 6.7138984 </td>
+   <td style="text-align:right;"> 9.498837 </td>
+   <td style="text-align:right;"> 0.0052540 </td>
+   <td style="text-align:right;"> 0.9929449 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cluster-2041.0 </td>
+   <td style="text-align:right;"> -2.233241 </td>
+   <td style="text-align:right;"> 2.3977174 </td>
+   <td style="text-align:right;"> 9.316846 </td>
+   <td style="text-align:right;"> 0.0056359 </td>
+   <td style="text-align:right;"> 0.9929449 </td>
+  </tr>
+</tbody>
+</table>
+
 </div>
+</div>
+<div class="cell" data-hash="edgeR_cache/html/unnamed-chunk-2_7e8e7deacad51f87de7681445cf48056">
+
 </div>
 </section>
 <section id="means-difference-plots" class="level2">
 <h2 class="anchored" data-anchor-id="means-difference-plots">Means difference plots</h2>
-<div class="cell" data-hash="edgeR_cache/html/means-differences-plot_d5304f6e14d489376e9dd180ef48a13c">
+<div class="cell" data-hash="edgeR_cache/html/means-differences-plot_0fa1f22193530b13e3ae53be761d3fa5">
 <div class="cell-output-display">
 <p><img src="edgeR_files/figure-html/means-differences-plot-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -243,23 +335,6 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 <p><img src="edgeR_files/figure-html/means-differences-plot-21.png" class="img-fluid" width="672"></p>
 </div>
-</div>
-</section>
-<section id="quasi-likelihood-f-test" class="level2">
-<h2 class="anchored" data-anchor-id="quasi-likelihood-f-test">Quasi-likelihood F-test</h2>
-<div class="cell" data-hash="edgeR_cache/html/unnamed-chunk-1_292fe2026edae4d8584ea69dd8742f99">
-<pre><code>## Coefficient:  df_groups$GroupDG1 
-##                    logFC     logCPM        F       PValue       FDR
-## Cluster-5165.0 -3.778488  3.7864821 20.94728 0.0001024006 0.3164248
-## Cluster-3339.0 -3.788594  4.8815869 20.51185 0.0001161831 0.3164248
-## Cluster-1863.0 -3.458183  3.8796697 17.86431 0.0002576997 0.4678967
-## Cluster-5340.0  6.190391  1.3653514 16.33397 0.0004185516 0.5055466
-## Cluster-666.0   4.862315 -0.3895843 15.30443 0.0005865341 0.5055466
-## Cluster-1638.0  3.401726 -0.5287143 14.43673 0.0007853104 0.5055466
-## Cluster-1121.0  3.210357 -0.5815962 12.98207 0.0013021853 0.5055466
-## Cluster-3207.0 -3.024132  3.9406369 12.87720 0.0013516714 0.5055466
-## Cluster-4787.0 -5.500143 -0.8905824 13.77956 0.0013742957 0.5055466
-## Cluster-1222.0 -5.340980 -0.9313044 13.66404 0.0014251625 0.5055466</code></pre>
 </div>
 
 
