@@ -88,7 +88,7 @@ htmlwidgets::saveWidget(glimmaMA(dds, groups = colData(dds)$Group), "img/ma-plot
 [MA plots](img/ma-plot-control-dg1.html)
 
 ```{r pca-explorer-control-dg1}
-#pcaExplorer(dds = dds)
+pcaExplorer(dds = dds)
 ```
 
 ### Samples clustering
